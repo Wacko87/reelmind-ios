@@ -26,7 +26,7 @@ public struct ShareView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "brain.head.profile")
                         .font(.title2)
-                        .foregroundColor(.purple)
+                        .foregroundStyle(.purple)
                     Text("ReelMind")
                         .font(.headline.bold())
                 }
@@ -36,8 +36,9 @@ public struct ShareView: View {
                 Button(action: onDismiss) {
                     Image(systemName: "xmark.circle.fill")
                         .font(.title3)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
+                .accessibilityLabel("Dismiss share sheet")
             }
 
             Divider()
@@ -46,28 +47,28 @@ public struct ShareView: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text("Content to Analyze:")
                     .font(.caption.bold())
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
 
                 HStack {
                     Image(systemName: "link")
-                        .foregroundColor(.purple)
+                        .foregroundStyle(.purple)
                     Text(urlString.isEmpty ? "Detecting shared URL..." : urlString)
                         .font(.subheadline)
                         .lineLimit(2)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
                 }
                 .padding(10)
                 .background(Color(.secondarySystemBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .clipShape(.rect(cornerRadius: 10))
             }
 
             if let message = statusMessage {
                 HStack(spacing: 6) {
                     Image(systemName: isSuccess ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
-                        .foregroundColor(isSuccess ? .green : .red)
+                        .foregroundStyle(isSuccess ? .green : .red)
                     Text(message)
                         .font(.footnote)
-                        .foregroundColor(isSuccess ? .green : .red)
+                        .foregroundStyle(isSuccess ? .green : .red)
                 }
             }
 
@@ -75,11 +76,11 @@ public struct ShareView: View {
             HStack(spacing: 12) {
                 Button("Cancel", action: onDismiss)
                     .font(.subheadline.bold())
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
                     .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .clipShape(.rect(cornerRadius: 12))
 
                 Button {
                     Task {
@@ -109,18 +110,18 @@ public struct ShareView: View {
                         Text(isSubmitting ? "Ingesting..." : "Save to Vault")
                     }
                     .font(.subheadline.bold())
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
                     .background(urlString.isEmpty || isSubmitting ? Color.gray : Color.purple)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .clipShape(.rect(cornerRadius: 12))
                 }
                 .disabled(urlString.isEmpty || isSubmitting)
             }
         }
         .padding(20)
         .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .clipShape(.rect(cornerRadius: 20))
         .shadow(radius: 20)
         .padding(.horizontal, 20)
     }

@@ -18,35 +18,33 @@ public struct ReelDetailView: View {
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
                             .background(Color.accentColor.opacity(0.12))
-                            .foregroundColor(.accentColor)
+                            .foregroundStyle(Color.accentColor)
                             .clipShape(Capsule())
 
                         if let author = viewModel.reel.author {
                             Text("@\(author)")
                                 .font(.caption)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
 
                         Spacer()
 
-                        Picker("Status", selection: Binding(
-                            get: { viewModel.reel.status },
-                            set: { newStatus in
-                                Task {
-                                    await viewModel.updateStatus(to: newStatus)
-                                }
-                            }
-                        )) {
+                        Picker("Status", selection: $viewModel.reel.status) {
                             Text("Pending").tag("pending")
                             Text("Tested").tag("tested")
                             Text("Favorite").tag("favorite")
                         }
                         .pickerStyle(.menu)
+                        .onChange(of: viewModel.reel.status) { _, newStatus in
+                            Task {
+                                await viewModel.updateStatus(to: newStatus)
+                            }
+                        }
                     }
 
                     Text(viewModel.reel.title)
                         .font(.title2.bold())
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
 
                     if let url = URL(string: viewModel.reel.url) {
                         Link(destination: url) {
@@ -55,7 +53,7 @@ public struct ReelDetailView: View {
                                 Text("Open original video")
                             }
                             .font(.subheadline)
-                            .foregroundColor(.accentColor)
+                            .foregroundStyle(Color.accentColor)
                         }
                     }
                 }
@@ -67,12 +65,12 @@ public struct ReelDetailView: View {
                         .font(.headline)
                     Text(viewModel.reel.summary)
                         .font(.body)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
                 .padding(16)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color(.secondarySystemGroupedBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .clipShape(.rect(cornerRadius: 14))
                 .padding(.horizontal, 16)
 
                 // AI Tools
@@ -88,7 +86,7 @@ public struct ReelDetailView: View {
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 6)
                                     .background(Color.accentColor.opacity(0.12))
-                                    .foregroundColor(.accentColor)
+                                    .foregroundStyle(Color.accentColor)
                                     .clipShape(Capsule())
                             }
                         }
@@ -96,7 +94,7 @@ public struct ReelDetailView: View {
                     .padding(16)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color(.secondarySystemGroupedBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                    .clipShape(.rect(cornerRadius: 14))
                     .padding(.horizontal, 16)
                 }
 
@@ -123,7 +121,7 @@ public struct ReelDetailView: View {
                         .frame(minHeight: 100)
                         .padding(8)
                         .background(Color(.tertiarySystemGroupedBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .clipShape(.rect(cornerRadius: 10))
 
                     Button {
                         Task {
@@ -144,7 +142,7 @@ public struct ReelDetailView: View {
                 }
                 .padding(16)
                 .background(Color(.secondarySystemGroupedBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .clipShape(.rect(cornerRadius: 14))
                 .padding(.horizontal, 16)
             }
             .padding(.vertical, 16)

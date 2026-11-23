@@ -15,12 +15,12 @@ public struct AskVaultView: View {
 
                         Text("Ask any question about the tricks, prompts, or tools saved across your collection:")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
 
                         TextField("e.g. Which tool creates cinematic 3D avatars?", text: $viewModel.questionInput)
                             .padding(12)
                             .background(Color(.secondarySystemGroupedBackground))
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .clipShape(.rect(cornerRadius: 12))
 
                         Button {
                             Task {
@@ -38,17 +38,17 @@ public struct AskVaultView: View {
                                 }
                             }
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 12)
                             .background(viewModel.questionInput.isEmpty || viewModel.isAsking ? Color.gray : Color.accentColor)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .clipShape(.rect(cornerRadius: 12))
                         }
                         .disabled(viewModel.questionInput.isEmpty || viewModel.isAsking)
                     }
                     .padding(16)
                     .background(Color(.secondarySystemGroupedBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .clipShape(.rect(cornerRadius: 16))
                     .padding(.horizontal, 16)
 
                     // Answer
@@ -56,17 +56,17 @@ public struct AskVaultView: View {
                         VStack(alignment: .leading, spacing: 12) {
                             Label("Synthesized Answer", systemImage: "lightbulb.fill")
                                 .font(.headline)
-                                .foregroundColor(.primary)
+                                .foregroundStyle(.primary)
 
                             Text(answer)
                                 .font(.body)
-                                .foregroundColor(.primary)
+                                .foregroundStyle(.primary)
 
                             if !viewModel.citations.isEmpty {
                                 Divider()
                                 Text("Citations & Sources:")
                                     .font(.caption.bold())
-                                    .foregroundColor(.secondary)
+                                    .foregroundStyle(.secondary)
 
                                 ForEach(viewModel.citations) { citation in
                                     HStack {
@@ -75,7 +75,7 @@ public struct AskVaultView: View {
                                             .padding(.horizontal, 6)
                                             .padding(.vertical, 2)
                                             .background(Color.accentColor.opacity(0.12))
-                                            .foregroundColor(.accentColor)
+                                            .foregroundStyle(Color.accentColor)
                                             .clipShape(Capsule())
                                         Text(citation.title)
                                             .font(.caption)
@@ -86,7 +86,7 @@ public struct AskVaultView: View {
                         }
                         .padding(16)
                         .background(Color(.secondarySystemGroupedBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .clipShape(.rect(cornerRadius: 16))
                         .padding(.horizontal, 16)
                     }
                 }

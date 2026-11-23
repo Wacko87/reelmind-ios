@@ -1,6 +1,6 @@
 import Foundation
 
-public final class LocalVaultService: Sendable {
+public actor LocalVaultService {
     public static let shared = LocalVaultService()
 
     private var fileManager: FileManager {
@@ -8,13 +8,16 @@ public final class LocalVaultService: Sendable {
     }
 
     private init() {
-        createStorageIfNeeded()
+        Self.createStorageIfNeeded()
+    }
+
+    private static var storageDirectory: URL {
+        let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+        return paths[0].appendingPathComponent("ReelMind", isDirectory: true)
     }
 
     private var storageDirectory: URL {
-        let paths = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        let appSupport = paths[0].appendingPathComponent("ReelMind", isDirectory: true)
-        return appSupport
+        Self.storageDirectory
     }
 
     private var reelsFileURL: URL {
@@ -25,18 +28,17 @@ public final class LocalVaultService: Sendable {
         storageDirectory.appendingPathComponent("folders_vault.json")
     }
 
-    private func createStorageIfNeeded() {
-        if !fileManager.fileExists(atPath: storageDirectory.path) {
-            try? fileManager.createDirectory(at: storageDirectory, withIntermediateDirectories: true)
+    private static func createStorageIfNeeded() {
+        if !FileManager.default.fileExists(atPath: storageDirectory.path) {
+            try? FileManager.default.createDirectory(at: storageDirectory, withIntermediateDirectories: true)
         }
     }
 
     // MARK: - Reels Operations
 
     public func loadReels() -> [Reel] {
-        createStorageIfNeeded()
+        Self.createStorageIfNeeded()
         guard fileManager.fileExists(atPath: reelsFileURL.path) else {
-            // Seed with sample data on first launch
             let samples = SampleData.initialReels
             saveReels(samples)
             return samples
@@ -51,7 +53,7 @@ public final class LocalVaultService: Sendable {
     }
 
     public func saveReels(_ reels: [Reel]) {
-        createStorageIfNeeded()
+        Self.createStorageIfNeeded()
         do {
             let data = try JSONEncoder().encode(reels)
             try data.write(to: reelsFileURL, options: .atomic)
@@ -79,7 +81,7 @@ public final class LocalVaultService: Sendable {
     // MARK: - Folders Operations
 
     public func loadFolders() -> [Folder] {
-        createStorageIfNeeded()
+        Self.createStorageIfNeeded()
         guard fileManager.fileExists(atPath: foldersFileURL.path) else {
             let samples = SampleData.initialFolders
             saveFolders(samples)
@@ -95,7 +97,7 @@ public final class LocalVaultService: Sendable {
     }
 
     public func saveFolders(_ folders: [Folder]) {
-        createStorageIfNeeded()
+        Self.createStorageIfNeeded()
         do {
             let data = try JSONEncoder().encode(folders)
             try data.write(to: foldersFileURL, options: .atomic)

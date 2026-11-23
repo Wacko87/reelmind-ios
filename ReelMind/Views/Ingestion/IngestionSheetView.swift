@@ -16,12 +16,12 @@ public struct IngestionSheetView: View {
                     VStack(spacing: 8) {
                         Image(systemName: "sparkles.rectangle.stack")
                             .font(.system(size: 40))
-                            .foregroundColor(.accentColor)
+                            .foregroundStyle(Color.accentColor)
                         Text("Add Video / Reel to Vault")
                             .font(.title3.bold())
                         Text("Paste a link from Instagram, TikTok, YouTube Shorts or X to extract prompts, tools and steps with Gemini.")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 16)
                     }
@@ -31,11 +31,11 @@ public struct IngestionSheetView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("URL of video or infographic")
                             .font(.caption.bold())
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
 
                         HStack {
                             Image(systemName: "link")
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                             TextField("https://www.instagram.com/reel/...", text: $viewModel.urlInput)
                                 .autocorrectionDisabled()
                                 .textInputAutocapitalization(.never)
@@ -46,13 +46,14 @@ public struct IngestionSheetView: View {
                                     viewModel.urlInput = ""
                                 } label: {
                                     Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(.secondary)
+                                        .foregroundStyle(.secondary)
                                 }
+                                .accessibilityLabel("Clear URL input")
                             }
                         }
                         .padding(12)
                         .background(Color(.secondarySystemGroupedBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(.rect(cornerRadius: 12))
                     }
                     .padding(.horizontal, 16)
 
@@ -67,13 +68,13 @@ public struct IngestionSheetView: View {
                             Text("Paste from Clipboard")
                         }
                         .font(.footnote.weight(.medium))
-                        .foregroundColor(.accentColor)
+                        .foregroundStyle(Color.accentColor)
                     }
 
                     if let error = viewModel.errorMessage {
                         Text(error)
                             .font(.footnote)
-                            .foregroundColor(.red)
+                            .foregroundStyle(.red)
                             .padding(.horizontal, 16)
                     }
 
@@ -98,11 +99,11 @@ public struct IngestionSheetView: View {
                             }
                         }
                         .font(.headline)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
                         .background(viewModel.urlInput.isEmpty || viewModel.isAnalyzing ? Color.gray : Color.accentColor)
-                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                        .clipShape(.rect(cornerRadius: 14))
                     }
                     .disabled(viewModel.urlInput.isEmpty || viewModel.isAnalyzing)
                     .padding(.horizontal, 16)

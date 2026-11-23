@@ -24,7 +24,7 @@ final class ShareViewController: UIViewController {
                 if provider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
                     provider.loadItem(forTypeIdentifier: UTType.url.identifier, options: nil) { [weak self] (url, _) in
                         if let shareURL = url as? URL {
-                            DispatchQueue.main.async {
+                            Task { @MainActor in
                                 self?.detectedURL = shareURL.absoluteString
                                 self?.presentShareView()
                             }
@@ -35,7 +35,7 @@ final class ShareViewController: UIViewController {
                     provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) { [weak self] (text, _) in
                         if let rawText = text as? String {
                             let extracted = self?.extractURL(from: rawText) ?? rawText
-                            DispatchQueue.main.async {
+                            Task { @MainActor in
                                 self?.detectedURL = extracted
                                 self?.presentShareView()
                             }
@@ -123,10 +123,10 @@ final class ShareViewController: UIViewController {
                 return .failure(error)
             }
         } else {
-            // Local-First / Standalone mode: calls Gemini directly and saves locally!
+            // Local-First mode: calls Gemini directly and saves to actor
             do {
                 let reel = try await GeminiService.shared.analyzeContent(urlOrText: url)
-                LocalVaultService.shared.addOrUpdateReel(reel)
+                await LocalVaultService.shared.addOrUpdateReel(reel)
                 return .success(reel.title)
             } catch {
                 return .failure(error)

@@ -20,30 +20,32 @@ public struct DashboardView: View {
                 if !viewModel.availableTools.isEmpty {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 6) {
-                            Button(action: {
+                            Button {
                                 viewModel.selectedTool = nil
-                            }) {
+                            } label: {
                                 Text("All Tools")
                                     .font(.caption.weight(.medium))
                                     .padding(.horizontal, 10)
                                     .padding(.vertical, 5)
                                     .background(viewModel.selectedTool == nil ? Color(.label) : Color(.tertiarySystemFill))
-                                    .foregroundColor(viewModel.selectedTool == nil ? Color(.systemBackground) : .primary)
+                                    .foregroundStyle(viewModel.selectedTool == nil ? Color(.systemBackground) : .primary)
                                     .clipShape(Capsule())
                             }
+                            .accessibilityLabel("Show all AI tools")
 
                             ForEach(viewModel.availableTools, id: \.self) { tool in
-                                Button(action: {
+                                Button {
                                     viewModel.selectedTool = (viewModel.selectedTool == tool) ? nil : tool
-                                }) {
+                                } label: {
                                     Text(tool)
                                         .font(.caption.weight(.medium))
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
                                         .background(viewModel.selectedTool == tool ? Color.accentColor : Color(.tertiarySystemFill))
-                                        .foregroundColor(viewModel.selectedTool == tool ? .white : .primary)
+                                        .foregroundStyle(viewModel.selectedTool == tool ? .white : .primary)
                                         .clipShape(Capsule())
                                 }
+                                .accessibilityLabel("Filter by tool \(tool)")
                             }
                         }
                         .padding(.horizontal, 16)
@@ -62,12 +64,12 @@ public struct DashboardView: View {
                     VStack(spacing: 12) {
                         Image(systemName: "brain.head.profile")
                             .font(.system(size: 48))
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                         Text("No Reels in this view")
                             .font(.headline)
                         Text("Tap + to ingest a reel or video from Instagram, TikTok or YouTube.")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 32)
                     }
@@ -75,12 +77,7 @@ public struct DashboardView: View {
                 } else {
                     List {
                         ForEach(viewModel.filteredReels) { reel in
-                            ZStack {
-                                NavigationLink(destination: ReelDetailView(reel: reel)) {
-                                    EmptyView()
-                                }
-                                .opacity(0)
-
+                            NavigationLink(value: reel) {
                                 ReelCardView(reel: reel) {
                                     Task {
                                         await viewModel.toggleFavorite(for: reel)
@@ -109,6 +106,9 @@ public struct DashboardView: View {
             }
             .background(Color(.systemGroupedBackground).ignoresSafeArea())
             .navigationTitle("ReelMind")
+            .navigationDestination(for: Reel.self) { reel in
+                ReelDetailView(reel: reel)
+            }
             .searchable(text: $viewModel.searchQuery, prompt: "Search reels, tools, prompts...")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -117,8 +117,9 @@ public struct DashboardView: View {
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .font(.title3)
-                            .foregroundColor(.accentColor)
+                            .foregroundStyle(Color.accentColor)
                     }
+                    .accessibilityLabel("Add new reel to vault")
                 }
             }
             .sheet(isPresented: $showingIngestionSheet) {

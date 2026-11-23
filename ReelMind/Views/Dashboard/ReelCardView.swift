@@ -29,7 +29,7 @@ public struct ReelCardView: View {
                         .frame(width: 8, height: 8)
                     Text(reel.platform.capitalized)
                         .font(.caption.bold())
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
 
                 Spacer()
@@ -40,27 +40,28 @@ public struct ReelCardView: View {
                         Text(time)
                     }
                     .font(.caption2)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                 }
 
                 Button(action: onToggleFavorite) {
                     Image(systemName: reel.status == "favorite" ? "heart.fill" : "heart")
-                        .foregroundColor(reel.status == "favorite" ? .red : .secondary)
+                        .foregroundStyle(reel.status == "favorite" ? .red : .secondary)
                         .font(.subheadline)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel(reel.status == "favorite" ? "Remove from favorites" : "Add to favorites")
             }
 
             // Title
             Text(reel.title)
                 .font(.headline)
                 .lineLimit(2)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
 
             // Executive Summary
             Text(reel.summary)
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .lineLimit(3)
 
             // AI Tools Pills
@@ -73,8 +74,8 @@ public struct ReelCardView: View {
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
                                 .background(Color.accentColor.opacity(0.12))
-                                .foregroundColor(.accentColor)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                                .foregroundStyle(Color.accentColor)
+                                .clipShape(.rect(cornerRadius: 6))
                         }
                     }
                 }
@@ -85,13 +86,13 @@ public struct ReelCardView: View {
                 if !reel.prompts.isEmpty {
                     Label("\(reel.prompts.count) Prompts", systemImage: "sparkles")
                         .font(.caption2)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
 
                 if !reel.keySteps.isEmpty {
                     Label("\(reel.keySteps.count) Steps", systemImage: "list.number")
                         .font(.caption2)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
 
                 Spacer()
@@ -106,7 +107,7 @@ public struct ReelCardView: View {
         }
         .padding(16)
         .background(Color(.secondarySystemGroupedBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .clipShape(.rect(cornerRadius: 16))
         .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 3)
     }
 }

@@ -13,7 +13,7 @@ public struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Google Gemini API Key")
                             .font(.caption.bold())
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
 
                         SecureField("AIzaSy...", text: $viewModel.geminiApiKey)
                             .autocorrectionDisabled()
@@ -33,7 +33,7 @@ public struct SettingsView: View {
                                     .font(.caption)
                             }
                             .font(.subheadline.weight(.medium))
-                            .foregroundColor(.accentColor)
+                            .foregroundStyle(Color.accentColor)
                         }
                     }
 
@@ -65,7 +65,7 @@ public struct SettingsView: View {
                             Text(message)
                         }
                         .font(.footnote)
-                        .foregroundColor(viewModel.connectionSuccess == true ? .green : .red)
+                        .foregroundStyle(viewModel.connectionSuccess == true ? .green : .red)
                     }
                 } header: {
                     Text("AI Intelligence Engine")
@@ -84,7 +84,7 @@ public struct SettingsView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Server URL")
                                 .font(.caption.bold())
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                             TextField("https://api.yourdomain.com", text: $viewModel.serverURL)
                                 .keyboardType(.URL)
                                 .autocorrectionDisabled()
@@ -97,7 +97,7 @@ public struct SettingsView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Access PIN / Token")
                                 .font(.caption.bold())
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                             SecureField("Optional PIN", text: $viewModel.apiToken)
                                 .onChange(of: viewModel.apiToken) { _, _ in
                                     viewModel.saveSettings()
@@ -112,21 +112,21 @@ public struct SettingsView: View {
                         Text("Mode")
                         Spacer()
                         Text(viewModel.useServerMode ? "Remote Server" : "Local Device (On-Device)")
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                     }
 
                     HStack {
                         Text("Architecture")
                         Spacer()
                         Text("Swift 6 + SwiftData")
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                     }
 
                     HStack {
                         Text("Privacy")
                         Spacer()
                         Text("Zero Data Collection")
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                     }
                 }
             }

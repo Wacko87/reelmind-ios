@@ -11,7 +11,7 @@ public struct StepsSectionView: View {
         VStack(alignment: .leading, spacing: 12) {
             Label("Step-by-Step Blueprint", systemImage: "list.number")
                 .font(.headline)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
 
             ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
                 HStack(alignment: .top, spacing: 12) {
@@ -19,12 +19,12 @@ public struct StepsSectionView: View {
                         .font(.caption.bold())
                         .frame(width: 24, height: 24)
                         .background(Color.accentColor.opacity(0.15))
-                        .foregroundColor(.accentColor)
+                        .foregroundStyle(Color.accentColor)
                         .clipShape(Circle())
 
                     Text(step)
                         .font(.subheadline)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(.vertical, 4)
@@ -32,6 +32,6 @@ public struct StepsSectionView: View {
         }
         .padding(16)
         .background(Color(.secondarySystemGroupedBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 14))
+        .clipShape(.rect(cornerRadius: 14))
     }
 }

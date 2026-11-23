@@ -13,7 +13,7 @@ public final class VaultRepository: Sendable {
         if isServerModeEnabled {
             return try await APIClient.shared.fetchReels(folderId: folderId)
         } else {
-            let all = LocalVaultService.shared.loadReels()
+            let all = await LocalVaultService.shared.loadReels()
             if let folderId = folderId, !folderId.isEmpty {
                 return all.filter { $0.folderId == folderId }
             }
@@ -25,7 +25,7 @@ public final class VaultRepository: Sendable {
         if isServerModeEnabled {
             return try await APIClient.shared.fetchFolders()
         } else {
-            return LocalVaultService.shared.loadFolders()
+            return await LocalVaultService.shared.loadFolders()
         }
     }
 
@@ -35,7 +35,7 @@ public final class VaultRepository: Sendable {
         } else {
             var reel = try await GeminiService.shared.analyzeContent(urlOrText: url)
             reel.folderId = folderId
-            LocalVaultService.shared.addOrUpdateReel(reel)
+            await LocalVaultService.shared.addOrUpdateReel(reel)
             return reel
         }
     }
@@ -44,7 +44,7 @@ public final class VaultRepository: Sendable {
         if isServerModeEnabled {
             return try await APIClient.shared.updateReel(id: id, update: update)
         } else {
-            var existing = LocalVaultService.shared.loadReels()
+            var existing = await LocalVaultService.shared.loadReels()
             guard let index = existing.firstIndex(where: { $0.id == id }) else {
                 throw ReelMindError.serverError(message: "Reel not found in local vault.")
             }
@@ -55,7 +55,7 @@ public final class VaultRepository: Sendable {
             if let tags = update.tags { reel.tags = tags }
             if let folderId = update.folderId { reel.folderId = folderId }
             existing[index] = reel
-            LocalVaultService.shared.saveReels(existing)
+            await LocalVaultService.shared.saveReels(existing)
             return reel
         }
     }
@@ -64,7 +64,7 @@ public final class VaultRepository: Sendable {
         if isServerModeEnabled {
             try await APIClient.shared.deleteReel(id: id)
         } else {
-            LocalVaultService.shared.deleteReel(id: id)
+            await LocalVaultService.shared.deleteReel(id: id)
         }
     }
 
@@ -83,7 +83,7 @@ public final class VaultRepository: Sendable {
             let res = try await APIClient.shared.askVault(question: question)
             return (res.answer, res.citations)
         } else {
-            let reels = LocalVaultService.shared.loadReels()
+            let reels = await LocalVaultService.shared.loadReels()
             var context = ""
             var citations: [VaultCitation] = []
             for reel in reels {

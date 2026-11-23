@@ -25,12 +25,12 @@ public struct PromptStudioView: View {
                             .frame(minHeight: 100)
                             .padding(8)
                             .background(Color(.secondarySystemGroupedBackground))
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .clipShape(.rect(cornerRadius: 12))
 
                         HStack {
                             Text("Target Model:")
                                 .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
 
                             Picker("Model", selection: $viewModel.targetModel) {
                                 ForEach(availableModels, id: \.self) { model in
@@ -56,17 +56,17 @@ public struct PromptStudioView: View {
                                 }
                             }
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 12)
                             .background(viewModel.promptInput.isEmpty || viewModel.isOptimizing ? Color.gray : Color.accentColor)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .clipShape(.rect(cornerRadius: 12))
                         }
                         .disabled(viewModel.promptInput.isEmpty || viewModel.isOptimizing)
                     }
                     .padding(16)
                     .background(Color(.secondarySystemGroupedBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .clipShape(.rect(cornerRadius: 16))
                     .padding(.horizontal, 16)
 
                     // Results
@@ -81,7 +81,7 @@ public struct PromptStudioView: View {
                                     HStack {
                                         Text(variation.label)
                                             .font(.subheadline.bold())
-                                            .foregroundColor(.accentColor)
+                                            .foregroundStyle(Color.accentColor)
                                         Spacer()
                                         Button {
                                             viewModel.copyPrompt(variation.prompt)
@@ -89,23 +89,24 @@ public struct PromptStudioView: View {
                                             Label("Copy", systemImage: "doc.on.doc")
                                                 .font(.caption)
                                         }
+                                        .accessibilityLabel("Copy variation \(variation.label)")
                                     }
 
                                     Text(variation.prompt)
                                         .font(.system(.subheadline, design: .monospaced))
                                         .padding(10)
                                         .background(Color(.tertiarySystemGroupedBackground))
-                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        .clipShape(.rect(cornerRadius: 8))
 
                                     if let explanation = variation.explanation {
                                         Text(explanation)
                                             .font(.caption)
-                                            .foregroundColor(.secondary)
+                                            .foregroundStyle(.secondary)
                                     }
                                 }
                                 .padding(16)
                                 .background(Color(.secondarySystemGroupedBackground))
-                                .clipShape(RoundedRectangle(cornerRadius: 14))
+                                .clipShape(.rect(cornerRadius: 14))
                                 .padding(.horizontal, 16)
                             }
                         }

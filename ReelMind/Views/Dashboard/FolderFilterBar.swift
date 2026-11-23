@@ -12,9 +12,9 @@ public struct FolderFilterBar: View {
     public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
-                Button(action: {
+                Button {
                     selectedFolderId = nil
-                }) {
+                } label: {
                     HStack(spacing: 6) {
                         Image(systemName: "tray.fill")
                         Text("All")
@@ -23,14 +23,15 @@ public struct FolderFilterBar: View {
                     .padding(.horizontal, 14)
                     .padding(.vertical, 8)
                     .background(selectedFolderId == nil ? Color.accentColor : Color(.secondarySystemFill))
-                    .foregroundColor(selectedFolderId == nil ? .white : .primary)
+                    .foregroundStyle(selectedFolderId == nil ? .white : .primary)
                     .clipShape(Capsule())
                 }
+                .accessibilityLabel("Show all folders")
 
                 ForEach(folders) { folder in
-                    Button(action: {
+                    Button {
                         selectedFolderId = folder.id
-                    }) {
+                    } label: {
                         HStack(spacing: 6) {
                             Text(folder.icon)
                             Text(folder.name)
@@ -47,9 +48,10 @@ public struct FolderFilterBar: View {
                         .padding(.horizontal, 14)
                         .padding(.vertical, 8)
                         .background(selectedFolderId == folder.id ? Color.accentColor : Color(.secondarySystemFill))
-                        .foregroundColor(selectedFolderId == folder.id ? .white : .primary)
+                        .foregroundStyle(selectedFolderId == folder.id ? .white : .primary)
                         .clipShape(Capsule())
                     }
+                    .accessibilityLabel("Filter by folder \(folder.name)")
                 }
             }
             .padding(.horizontal, 16)
