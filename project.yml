@@ -40,6 +40,8 @@ targets:
       - path: ReelMindShare
         excludes:
           - "Info.plist"
+      - path: ReelMind/Models
+      - path: ReelMind/Services
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.reelmind.app.share

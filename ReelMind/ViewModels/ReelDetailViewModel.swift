@@ -11,12 +11,12 @@ public final class ReelDetailViewModel {
     public var errorMessage: String? = nil
     public var showCopiedAlert: Bool = false
 
-    private let apiClient: APIClient
+    private let repository: VaultRepository
 
-    public init(reel: Reel, apiClient: APIClient = .shared) {
+    public init(reel: Reel, repository: VaultRepository = .shared) {
         self.reel = reel
         self.userNotes = reel.userNotes
-        self.apiClient = apiClient
+        self.repository = repository
     }
 
     public func saveNotes() async {
@@ -25,7 +25,7 @@ public final class ReelDetailViewModel {
         errorMessage = nil
         let update = ReelUpdateRequest(userNotes: userNotes)
         do {
-            let updated = try await apiClient.updateReel(id: reel.id, update: update)
+            let updated = try await repository.updateReel(id: reel.id, update: update)
             self.reel = updated
         } catch {
             self.errorMessage = "Could not save notes: \(error.localizedDescription)"
@@ -38,7 +38,7 @@ public final class ReelDetailViewModel {
         errorMessage = nil
         let update = ReelUpdateRequest(status: newStatus)
         do {
-            let updated = try await apiClient.updateReel(id: reel.id, update: update)
+            let updated = try await repository.updateReel(id: reel.id, update: update)
             self.reel = updated
         } catch {
             self.errorMessage = "Could not update status: \(error.localizedDescription)"

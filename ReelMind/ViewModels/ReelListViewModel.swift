@@ -12,10 +12,10 @@ public final class ReelListViewModel {
     public var isLoading: Bool = false
     public var errorMessage: String? = nil
 
-    private let apiClient: APIClient
+    private let repository: VaultRepository
 
-    public init(apiClient: APIClient = .shared) {
-        self.apiClient = apiClient
+    public init(repository: VaultRepository = .shared) {
+        self.repository = repository
     }
 
     public var availableTools: [String] {
@@ -54,8 +54,8 @@ public final class ReelListViewModel {
         isLoading = true
         errorMessage = nil
         do {
-            async let fetchedReels = apiClient.fetchReels(folderId: selectedFolderId)
-            async let fetchedFolders = apiClient.fetchFolders()
+            async let fetchedReels = repository.fetchReels(folderId: selectedFolderId)
+            async let fetchedFolders = repository.fetchFolders()
             self.reels = try await fetchedReels
             self.folders = try await fetchedFolders
         } catch {
@@ -66,7 +66,7 @@ public final class ReelListViewModel {
 
     public func deleteReel(id: String) async {
         do {
-            try await apiClient.deleteReel(id: id)
+            try await repository.deleteReel(id: id)
             reels.removeAll { $0.id == id }
         } catch {
             self.errorMessage = "Failed to delete item: \(error.localizedDescription)"
@@ -77,7 +77,7 @@ public final class ReelListViewModel {
         let newStatus = reel.status == "favorite" ? "tested" : "favorite"
         let updateReq = ReelUpdateRequest(status: newStatus)
         do {
-            let updated = try await apiClient.updateReel(id: reel.id, update: updateReq)
+            let updated = try await repository.updateReel(id: reel.id, update: updateReq)
             if let index = reels.firstIndex(where: { $0.id == reel.id }) {
                 reels[index] = updated
             }

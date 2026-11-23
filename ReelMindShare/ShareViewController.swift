@@ -34,7 +34,6 @@ final class ShareViewController: UIViewController {
                 } else if provider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) {
                     provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) { [weak self] (text, _) in
                         if let rawText = text as? String {
-                            // Extract first URL found in text if user shared a caption with URL
                             let extracted = self?.extractURL(from: rawText) ?? rawText
                             DispatchQueue.main.async {
                                 self?.detectedURL = extracted
@@ -66,7 +65,7 @@ final class ShareViewController: UIViewController {
                 self?.completeExtension()
             },
             onSubmit: { [weak self] url in
-                await self?.sendToReelMind(url: url) ?? .failure(NSError(domain: "ReelMind", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed"]))
+                await self?.saveSharedContent(url: url) ?? .failure(NSError(domain: "ReelMind", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed"]))
             }
         )
 
@@ -86,39 +85,52 @@ final class ShareViewController: UIViewController {
         hostingController.didMove(toParent: self)
     }
 
-    private func sendToReelMind(url: String) async -> Result<String, Error> {
-        let baseURL = UserDefaults.standard.string(forKey: "reelmind_server_url") ?? ""
-        guard !baseURL.isEmpty, let endpoint = URL(string: "\(baseURL.trimmingCharacters(in: CharacterSet(charactersIn: "/")))/api/reels/analyze") else {
-            return .failure(NSError(domain: "ReelMind", code: 400, userInfo: [NSLocalizedDescriptionKey: "Please set server URL in ReelMind Settings"]))
-        }
+    private func saveSharedContent(url: String) async -> Result<String, Error> {
+        let useServer = UserDefaults.standard.bool(forKey: "reelmind_use_server_mode")
 
-        var request = URLRequest(url: endpoint)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let token = UserDefaults.standard.string(forKey: "reelmind_api_token") ?? ""
-        if !token.isEmpty {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
-
-        let body: [String: Any] = ["url": url, "media_type": "auto"]
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: body) else {
-            return .failure(NSError(domain: "ReelMind", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid request payload"]))
-        }
-        request.httpBody = jsonData
-
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                return .failure(NSError(domain: "ReelMind", code: 500, userInfo: [NSLocalizedDescriptionKey: "Server error occurred"]))
+        if useServer {
+            let baseURL = UserDefaults.standard.string(forKey: "reelmind_server_url") ?? ""
+            guard !baseURL.isEmpty, let endpoint = URL(string: "\(baseURL.trimmingCharacters(in: CharacterSet(charactersIn: "/")))/api/reels/analyze") else {
+                return .failure(NSError(domain: "ReelMind", code: 400, userInfo: [NSLocalizedDescriptionKey: "Please configure server URL in Settings"]))
             }
-            if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-               let title = json["title"] as? String {
-                return .success(title)
+
+            var request = URLRequest(url: endpoint)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            let token = UserDefaults.standard.string(forKey: "reelmind_api_token") ?? ""
+            if !token.isEmpty {
+                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             }
-            return .success("Analyzed successfully")
-        } catch {
-            return .failure(error)
+
+            let body: [String: Any] = ["url": url, "media_type": "auto"]
+            guard let jsonData = try? JSONSerialization.data(withJSONObject: body) else {
+                return .failure(NSError(domain: "ReelMind", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid request payload"]))
+            }
+            request.httpBody = jsonData
+
+            do {
+                let (data, response) = try await URLSession.shared.data(for: request)
+                guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+                    return .failure(NSError(domain: "ReelMind", code: 500, userInfo: [NSLocalizedDescriptionKey: "Server error occurred"]))
+                }
+                if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                   let title = json["title"] as? String {
+                    return .success(title)
+                }
+                return .success("Analyzed successfully")
+            } catch {
+                return .failure(error)
+            }
+        } else {
+            // Local-First / Standalone mode: calls Gemini directly and saves locally!
+            do {
+                let reel = try await GeminiService.shared.analyzeContent(urlOrText: url)
+                LocalVaultService.shared.addOrUpdateReel(reel)
+                return .success(reel.title)
+            } catch {
+                return .failure(error)
+            }
         }
     }
 

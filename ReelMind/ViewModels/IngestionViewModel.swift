@@ -10,16 +10,16 @@ public final class IngestionViewModel {
     public var analyzedReel: Reel? = nil
     public var errorMessage: String? = nil
 
-    private let apiClient: APIClient
+    private let repository: VaultRepository
 
-    public init(apiClient: APIClient = .shared) {
-        self.apiClient = apiClient
+    public init(repository: VaultRepository = .shared) {
+        self.repository = repository
     }
 
     public func analyze() async -> Bool {
         let trimmed = urlInput.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
-            errorMessage = "Please enter a valid Instagram, TikTok, YouTube or X URL."
+            errorMessage = "Please enter or paste a valid link from Instagram, TikTok, YouTube or X."
             return false
         }
 
@@ -28,7 +28,7 @@ public final class IngestionViewModel {
         analyzedReel = nil
 
         do {
-            let result = try await apiClient.analyzeReel(url: trimmed, folderId: selectedFolderId)
+            let result = try await repository.analyzeReel(url: trimmed, folderId: selectedFolderId)
             self.analyzedReel = result
             self.isAnalyzing = false
             return true

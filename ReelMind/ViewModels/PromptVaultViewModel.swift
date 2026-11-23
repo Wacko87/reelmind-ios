@@ -20,10 +20,10 @@ public final class PromptVaultViewModel {
     public var errorMessage: String? = nil
     public var copyAlert: Bool = false
 
-    private let apiClient: APIClient
+    private let repository: VaultRepository
 
-    public init(apiClient: APIClient = .shared) {
-        self.apiClient = apiClient
+    public init(repository: VaultRepository = .shared) {
+        self.repository = repository
     }
 
     public func optimize() async {
@@ -32,10 +32,9 @@ public final class PromptVaultViewModel {
 
         isOptimizing = true
         errorMessage = nil
-        let request = PromptOptimizeRequest(prompt: trimmed, mode: "variations", targetModel: targetModel)
         do {
-            let response = try await apiClient.optimizePrompt(request: request)
-            self.variations = response.variations
+            let res = try await repository.optimizePrompt(prompt: trimmed, targetModel: targetModel)
+            self.variations = res
         } catch {
             self.errorMessage = error.localizedDescription
         }
@@ -49,9 +48,9 @@ public final class PromptVaultViewModel {
         isAsking = true
         errorMessage = nil
         do {
-            let response = try await apiClient.askVault(question: trimmed)
-            self.vaultAnswer = response.answer
-            self.citations = response.citations
+            let (answer, citations) = try await repository.askVault(question: trimmed)
+            self.vaultAnswer = answer
+            self.citations = citations
         } catch {
             self.errorMessage = error.localizedDescription
         }

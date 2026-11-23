@@ -12,25 +12,38 @@
 		0547F27A67CE50E60113A8AE /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B40B7FFF3CF0114F913FBE /* ShareView.swift */; };
 		1FD402AED13AB8CF6023D0A8 /* ReelDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB69FA7E6FF5A205C0847BC /* ReelDetailViewModel.swift */; };
 		2EC3B909763B0C1FE6140276 /* IngestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1309F78AD30D79BAED04C0 /* IngestionViewModel.swift */; };
+		35EF8D86A82A9430F1D97628 /* LocalVaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A204BB9EA56AF8E498661E6 /* LocalVaultService.swift */; };
 		3C86DBBE14D19426DA219184 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CE3087ABBC6837AFEC9CEB /* APIClient.swift */; };
+		40A7BEFAF427F18A07877826 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743F77523A578756A34D48C /* AppSettings.swift */; };
 		4C2533D2A4D618DB5F0B8272 /* ReelMindShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 18775950992C5DBD2364DE52 /* ReelMindShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4D43540E7AFDAB974E3C6B8C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B557C25AA2E60FCEDA4A43FD /* SettingsView.swift */; };
 		4E8309BF7A8E342092F20C3D /* ReelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB902C4817E2A3F3F0668F /* ReelListViewModel.swift */; };
 		4FBC57141A27009B74659348 /* PromptVariation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C1E347AAA17F3F082C6FA0 /* PromptVariation.swift */; };
 		58CE9B112005118EC1E6369F /* PromptsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB18E559BF21E26E5EDE4BA /* PromptsSectionView.swift */; };
+		5F5CD53C5DBA52529C989065 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CE3087ABBC6837AFEC9CEB /* APIClient.swift */; };
+		62F0273B484DDA92D3377570 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16B291A9B3F96628D400C7F /* Folder.swift */; };
 		639280C4F2ECE98D3DDA2770 /* FolderFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF594858F29B2112117D97B /* FolderFilterBar.swift */; };
 		66697DFC29BBA8348E5D5B5F /* PromptStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED68DC7341E069DDA36B9F4 /* PromptStudioView.swift */; };
 		724C2392FE3CD25A076788F2 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042D08C1E06B8815EFB9349E /* MainTabView.swift */; };
 		7554510BE53335D35448936D /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16B291A9B3F96628D400C7F /* Folder.swift */; };
+		75DB2A9454540EB4D92B9F6C /* PromptVariation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C1E347AAA17F3F082C6FA0 /* PromptVariation.swift */; };
+		75F74D0B4F825BF85BE84948 /* VaultCitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D763CA34D6BC42ECDE03975F /* VaultCitation.swift */; };
 		766322EE5F695AEE4B1B212C /* AskVaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C94E49458E18C524618639 /* AskVaultView.swift */; };
 		84DE910641458922923B9883 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0B71A666CC9A48762C422 /* DashboardView.swift */; };
+		87149F8CAA068CF5441C553D /* VaultRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E731E0677D99EF801D59631 /* VaultRepository.swift */; };
+		876A2F36564E0538B5377658 /* Reel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04E00B43747EAC64E94087 /* Reel.swift */; };
 		877098B2E91C110B24CBFA87 /* StepsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929804D44F13BAB2786D4E7C /* StepsSectionView.swift */; };
 		8EBCB8B90DC2334B21447E7D /* Reel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04E00B43747EAC64E94087 /* Reel.swift */; };
 		8F9D4634C9FFBB21D1B08177 /* ReelMindError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C7318DD2145AD5749F326 /* ReelMindError.swift */; };
+		9643119C21B188F2A7AA1B0A /* LocalVaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A204BB9EA56AF8E498661E6 /* LocalVaultService.swift */; };
 		96F7426A0AA8095699252480 /* IngestionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8B09BF3CDFB85AC258ED4F /* IngestionSheetView.swift */; };
+		99F08A55452FD3709E890EC7 /* VaultRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E731E0677D99EF801D59631 /* VaultRepository.swift */; };
 		9F56E2E59B00E58D94BD597C /* ReelMindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B10C16A0691B2B8C73B75B /* ReelMindApp.swift */; };
 		AAC6F49E473671C34011178A /* ReelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17D315D0EBEA1DF246255F1 /* ReelDetailView.swift */; };
+		AC92216C82135D6A6EC48040 /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA16C301AA1291B0BC58FB /* GeminiService.swift */; };
 		B0BDB1CEDE24F3A2B18FE662 /* PromptVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA564E096A5FB52FD9339D41 /* PromptVaultViewModel.swift */; };
+		B22ECD5296949D04761F8BED /* ReelMindError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C7318DD2145AD5749F326 /* ReelMindError.swift */; };
+		B419761E5D99D6004191E02A /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA16C301AA1291B0BC58FB /* GeminiService.swift */; };
 		C57781A83B7C9BD592B1A594 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743F77523A578756A34D48C /* AppSettings.swift */; };
 		DD371D194ECA9386F7EB7D09 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E6ECCB3F3E1F83A845D026 /* ShareViewController.swift */; };
 		F188603C50B491DD6FD3C48E /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F57184DD4C0457E1A402E9A /* SettingsViewModel.swift */; };
@@ -73,9 +86,11 @@
 		5743F77523A578756A34D48C /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		5ED68DC7341E069DDA36B9F4 /* PromptStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptStudioView.swift; sourceTree = "<group>"; };
 		5FDB902C4817E2A3F3F0668F /* ReelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelListViewModel.swift; sourceTree = "<group>"; };
+		6A204BB9EA56AF8E498661E6 /* LocalVaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVaultService.swift; sourceTree = "<group>"; };
 		6EB18E559BF21E26E5EDE4BA /* PromptsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptsSectionView.swift; sourceTree = "<group>"; };
 		7B1309F78AD30D79BAED04C0 /* IngestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngestionViewModel.swift; sourceTree = "<group>"; };
 		89C1E347AAA17F3F082C6FA0 /* PromptVariation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptVariation.swift; sourceTree = "<group>"; };
+		8E731E0677D99EF801D59631 /* VaultRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultRepository.swift; sourceTree = "<group>"; };
 		929804D44F13BAB2786D4E7C /* StepsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsSectionView.swift; sourceTree = "<group>"; };
 		A16B291A9B3F96628D400C7F /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		A1F0B71A666CC9A48762C422 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
@@ -86,6 +101,7 @@
 		CBF594858F29B2112117D97B /* FolderFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderFilterBar.swift; sourceTree = "<group>"; };
 		D6E891BEB04A8222FD14519F /* ReelCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelCardView.swift; sourceTree = "<group>"; };
 		D763CA34D6BC42ECDE03975F /* VaultCitation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCitation.swift; sourceTree = "<group>"; };
+		DEFA16C301AA1291B0BC58FB /* GeminiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiService.swift; sourceTree = "<group>"; };
 		E7F24E173AE1113B08F6472A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F6CE3087ABBC6837AFEC9CEB /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		FA564E096A5FB52FD9339D41 /* PromptVaultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptVaultViewModel.swift; sourceTree = "<group>"; };
@@ -116,7 +132,10 @@
 			isa = PBXGroup;
 			children = (
 				F6CE3087ABBC6837AFEC9CEB /* APIClient.swift */,
+				DEFA16C301AA1291B0BC58FB /* GeminiService.swift */,
+				6A204BB9EA56AF8E498661E6 /* LocalVaultService.swift */,
 				FD6C7318DD2145AD5749F326 /* ReelMindError.swift */,
+				8E731E0677D99EF801D59631 /* VaultRepository.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -328,8 +347,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F5CD53C5DBA52529C989065 /* APIClient.swift in Sources */,
+				40A7BEFAF427F18A07877826 /* AppSettings.swift in Sources */,
+				62F0273B484DDA92D3377570 /* Folder.swift in Sources */,
+				AC92216C82135D6A6EC48040 /* GeminiService.swift in Sources */,
+				35EF8D86A82A9430F1D97628 /* LocalVaultService.swift in Sources */,
+				75DB2A9454540EB4D92B9F6C /* PromptVariation.swift in Sources */,
+				876A2F36564E0538B5377658 /* Reel.swift in Sources */,
+				B22ECD5296949D04761F8BED /* ReelMindError.swift in Sources */,
 				0547F27A67CE50E60113A8AE /* ShareView.swift in Sources */,
 				DD371D194ECA9386F7EB7D09 /* ShareViewController.swift in Sources */,
+				75F74D0B4F825BF85BE84948 /* VaultCitation.swift in Sources */,
+				99F08A55452FD3709E890EC7 /* VaultRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,8 +372,10 @@
 				84DE910641458922923B9883 /* DashboardView.swift in Sources */,
 				7554510BE53335D35448936D /* Folder.swift in Sources */,
 				639280C4F2ECE98D3DDA2770 /* FolderFilterBar.swift in Sources */,
+				B419761E5D99D6004191E02A /* GeminiService.swift in Sources */,
 				96F7426A0AA8095699252480 /* IngestionSheetView.swift in Sources */,
 				2EC3B909763B0C1FE6140276 /* IngestionViewModel.swift in Sources */,
+				9643119C21B188F2A7AA1B0A /* LocalVaultService.swift in Sources */,
 				724C2392FE3CD25A076788F2 /* MainTabView.swift in Sources */,
 				66697DFC29BBA8348E5D5B5F /* PromptStudioView.swift in Sources */,
 				4FBC57141A27009B74659348 /* PromptVariation.swift in Sources */,
@@ -361,6 +392,7 @@
 				F188603C50B491DD6FD3C48E /* SettingsViewModel.swift in Sources */,
 				877098B2E91C110B24CBFA87 /* StepsSectionView.swift in Sources */,
 				0364DDFF568AA916B70AE7FD /* VaultCitation.swift in Sources */,
+				87149F8CAA068CF5441C553D /* VaultRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
