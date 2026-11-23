@@ -13,6 +13,7 @@
   <img src="https://img.shields.io/badge/iOS-17.0%2B-blue?style=for-the-badge&logo=apple" alt="iOS 17+" />
   <img src="https://img.shields.io/badge/Swift-6.0-F05138?style=for-the-badge&logo=swift" alt="Swift 6.0" />
   <img src="https://img.shields.io/badge/SwiftUI-MVVM-007AFF?style=for-the-badge" alt="SwiftUI MVVM" />
+  <img src="https://img.shields.io/badge/Languages-English%20%7C%20Espa%C3%B1ol-orange?style=for-the-badge" alt="English and Spanish" />
   <img src="https://img.shields.io/badge/Security-Keychain-success?style=for-the-badge" alt="Keychain" />
   <img src="https://img.shields.io/badge/App_Store-Ready-green?style=for-the-badge" alt="App Store Ready" />
 </p>
@@ -21,6 +22,7 @@
 
 ## 🌟 Highlights & Key Features
 
+- **🌍 Native Bilingual Support (English & Spanish):** Powered by Apple's modern **String Catalogs (`.xcstrings`)** with 90+ translated keys. Includes **Adaptive AI Extraction** where Google Gemini automatically formats summaries, blueprints, and difficulty ratings in Spanish for Spanish-configured devices and English for international users.
 - **📱 1-Tap Native Share Extension (`ReelMindShare`):** Dissect and ingest reels instantly from Instagram, TikTok, YouTube, or X without ever leaving the social network.
 - **⚡ 100% Local-First Architecture:** Operates completely standalone on your device. Zero mandatory external servers. Zero telemetry. Zero trackers.
 - **🤖 On-Device AI Extraction (Google Gemini):** Powered by direct REST API calls using **Structured Outputs** (JSON Schema enforcement) to extract:
@@ -67,12 +69,13 @@ ReelMind/
 │   ├── KeychainService.swift     # Security framework wrapper (kSecClassGenericPassword)
 │   └── VaultRepository.swift     # Unified local-first repository
 ├── Tips/                 # Native Apple TipKit discovery rules
-└── Resources/            # Assets catalog & PrivacyInfo.xcprivacy
+└── Resources/            # Assets catalog, PrivacyInfo.xcprivacy & Localizable.xcstrings
 
 ReelMindShare/            # App Extension target (com.apple.share-services)
 ├── ShareViewController.swift
 ├── ShareView.swift
-└── PrivacyInfo.xcprivacy
+├── PrivacyInfo.xcprivacy
+└── Localizable.xcstrings
 ```
 
 ---
