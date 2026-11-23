@@ -24,13 +24,13 @@
 
 - **🌍 Native Bilingual Support (English & Spanish):** Powered by Apple's modern **String Catalogs (`.xcstrings`)** with 90+ translated keys. Includes **Adaptive AI Extraction** where Google Gemini automatically formats summaries, blueprints, and difficulty ratings in Spanish for Spanish-configured devices and English for international users.
 - **📱 1-Tap Native Share Extension (`ReelMindShare`):** Dissect and ingest reels instantly from Instagram, TikTok, YouTube, or X without ever leaving the social network.
-- **⚡ 100% Local-First Architecture:** Operates completely standalone on your device. Zero mandatory external servers. Zero telemetry. Zero trackers.
-- **🤖 On-Device AI Extraction (Google Gemini):** Powered by direct REST API calls using **Structured Outputs** (JSON Schema enforcement) to extract:
+- **⚡ 100% Local-First Architecture:** Operates completely standalone on your device with an **actor-isolated in-memory cache** (`LocalVaultService`) providing microsecond read latencies and atomic disk persistence. Zero mandatory external servers. Zero telemetry. Zero trackers.
+- **🤖 On-Device AI Extraction (Google Gemini):** Powered by direct REST API calls using **Structured Outputs** (JSON Schema enforcement) and secured via HTTP request headers (`x-goog-api-key`) to prevent query-string token leaks:
   - Exact copy-paste prompts & formula variations.
   - Step-by-step replication blueprints.
   - Detected AI tools & models (*Midjourney, Flux, Claude, ElevenLabs, Cursor*).
   - Difficulty ratings and estimated execution times.
-- **🔐 Enclave Security & Keychain Protection:** API keys and sensitive tokens are encrypted using Apple's Security framework (`kSecClassGenericPassword` with `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`). Zero plaintext storage in `UserDefaults`.
+- **🔐 Enclave Security & Keychain Protection:** API keys and sensitive tokens are encrypted using Apple's Security framework (`kSecClassGenericPassword` with `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`). Zero plaintext storage in `UserDefaults`, plus strict URL scheme sanitization (`https`/`http` only).
 - **🛡️ Apple App Store Review Compliant:**
   - Official Privacy Manifests (`PrivacyInfo.xcprivacy`) declaring approved reason `CA92.1` for user preferences and zero tracking.
   - Strict App Transport Security (ATS) hardening with `NSAllowsLocalNetworking: true` (no `NSAllowsArbitraryLoads`).

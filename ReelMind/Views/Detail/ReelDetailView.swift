@@ -7,6 +7,15 @@ public struct ReelDetailView: View {
         self._viewModel = State(initialValue: ReelDetailViewModel(reel: reel))
     }
 
+    private var safeWebURL: URL? {
+        guard let url = URL(string: viewModel.reel.url),
+              let scheme = url.scheme?.lowercased(),
+              ["http", "https"].contains(scheme) else {
+            return nil
+        }
+        return url
+    }
+
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -46,7 +55,7 @@ public struct ReelDetailView: View {
                         .font(.title2.bold())
                         .foregroundStyle(.primary)
 
-                    if let url = URL(string: viewModel.reel.url) {
+                    if let url = safeWebURL {
                         Link(destination: url) {
                             HStack(spacing: 4) {
                                 Image(systemName: "arrow.up.right.square")

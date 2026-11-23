@@ -3,6 +3,9 @@ import Foundation
 public actor LocalVaultService {
     public static let shared = LocalVaultService()
 
+    private var cachedReels: [Reel]?
+    private var cachedFolders: [Folder]?
+
     private var fileManager: FileManager {
         FileManager.default
     }
@@ -63,6 +66,10 @@ public actor LocalVaultService {
     // MARK: - Reels Operations
 
     public func loadReels() -> [Reel] {
+        if let cached = cachedReels {
+            return cached
+        }
+
         Self.createStorageIfNeeded()
         guard fileManager.fileExists(atPath: reelsFileURL.path) else {
             let samples = SampleData.initialReels
@@ -72,13 +79,16 @@ public actor LocalVaultService {
 
         do {
             let data = try Data(contentsOf: reelsFileURL)
-            return try JSONDecoder().decode([Reel].self, from: data)
+            let loaded = try JSONDecoder().decode([Reel].self, from: data)
+            self.cachedReels = loaded
+            return loaded
         } catch {
             return []
         }
     }
 
     public func saveReels(_ reels: [Reel]) {
+        self.cachedReels = reels
         Self.createStorageIfNeeded()
         do {
             let data = try JSONEncoder().encode(reels)
@@ -153,6 +163,10 @@ public actor LocalVaultService {
     // MARK: - Folders Operations
 
     public func loadFolders() -> [Folder] {
+        if let cached = cachedFolders {
+            return cached
+        }
+
         Self.createStorageIfNeeded()
         guard fileManager.fileExists(atPath: foldersFileURL.path) else {
             let samples = SampleData.initialFolders
@@ -162,13 +176,16 @@ public actor LocalVaultService {
 
         do {
             let data = try Data(contentsOf: foldersFileURL)
-            return try JSONDecoder().decode([Folder].self, from: data)
+            let loaded = try JSONDecoder().decode([Folder].self, from: data)
+            self.cachedFolders = loaded
+            return loaded
         } catch {
             return []
         }
     }
 
     public func saveFolders(_ folders: [Folder]) {
+        self.cachedFolders = folders
         Self.createStorageIfNeeded()
         do {
             let data = try JSONEncoder().encode(folders)

@@ -188,7 +188,7 @@ public final class GeminiService: Sendable {
 
     private func callGemini(systemInstruction: String, prompt: String, enforceJSON: Bool) async throws -> String {
         let model = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-2.5-flash"
-        let endpointString = "https://generativelanguage.googleapis.com/v1beta/models/\(model):generateContent?key=\(apiKey.trimmingCharacters(in: .whitespacesAndNewlines))"
+        let endpointString = "https://generativelanguage.googleapis.com/v1beta/models/\(model):generateContent"
 
         guard let url = URL(string: endpointString) else {
             throw ReelMindError.invalidURL
@@ -197,6 +197,7 @@ public final class GeminiService: Sendable {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(apiKey.trimmingCharacters(in: .whitespacesAndNewlines), forHTTPHeaderField: "x-goog-api-key")
 
         var generationConfig: [String: Any] = [
             "temperature": 0.3,
