@@ -1,14 +1,52 @@
 import SwiftUI
+import TipKit
 
 public struct DashboardView: View {
     @State public var viewModel = ReelListViewModel()
     @State private var showingIngestionSheet = false
+    private let shareTip = ShareExtensionTip()
 
     public init() {}
 
     public var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                // TipKit Coach Mark for Share Extension
+                TipView(shareTip)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 4)
+
+                // Onboarding / AI Setup Banner if API key is missing
+                if !GeminiService.shared.hasApiKey {
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "sparkles")
+                                .font(.title2)
+                                .foregroundStyle(Color.accentColor)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Activate Free Gemini AI")
+                                    .font(.subheadline.bold())
+                                    .foregroundStyle(.primary)
+                                Text("Tap here to add your free Gemini key in 1 click & analyze reels.")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.caption.bold())
+                                .foregroundStyle(.tertiary)
+                        }
+                        .padding(12)
+                        .background(Color.accentColor.opacity(0.12))
+                        .clipShape(.rect(cornerRadius: 12))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 4)
+                    }
+                    .buttonStyle(.plain)
+                }
+
                 // Folder Filter Bar
                 FolderFilterBar(
                     folders: viewModel.folders,

@@ -104,6 +104,52 @@ public actor LocalVaultService {
         saveReels(existing)
     }
 
+    // MARK: - Export and Restore
+
+    public func exportVaultAsMarkdown() -> String {
+        let reels = loadReels()
+        var markdown = "# ReelMind AI Vault Export\n\n"
+        markdown += "Exported on: \(ISO8601DateFormatter().string(from: Date()))\n"
+        markdown += "Total Saved Reels: \(reels.count)\n\n---\n\n"
+
+        for reel in reels {
+            markdown += "## \(reel.title)\n"
+            markdown += "- **Platform:** \(reel.platform.capitalized)\n"
+            if !reel.difficulty.isEmpty {
+                markdown += "- **Difficulty:** \(reel.difficulty)\n"
+            }
+            if let time = reel.estimatedTime, !time.isEmpty {
+                markdown += "- **Estimated Time:** \(time)\n"
+            }
+            markdown += "- **URL:** \(reel.url)\n\n"
+            markdown += "### Summary\n\(reel.summary)\n\n"
+
+            if !reel.aiTools.isEmpty {
+                markdown += "### Mentioned AI Tools\n" + reel.aiTools.map { "- \($0)" }.joined(separator: "\n") + "\n\n"
+            }
+
+            if !reel.keySteps.isEmpty {
+                markdown += "### Step-by-Step Guide\n" + reel.keySteps.enumerated().map { "\($0.offset + 1). \($0.element)" }.joined(separator: "\n") + "\n\n"
+            }
+
+            if !reel.prompts.isEmpty {
+                markdown += "### Prompts & Formulas\n" + reel.prompts.map { "```\n\($0)\n```" }.joined(separator: "\n\n") + "\n\n"
+            }
+
+            if !reel.userNotes.isEmpty {
+                markdown += "### Personal Notes\n\(reel.userNotes)\n\n"
+            }
+
+            markdown += "---\n\n"
+        }
+        return markdown
+    }
+
+    public func restoreSampleReels() {
+        let samples = SampleData.initialReels
+        saveReels(samples)
+    }
+
     // MARK: - Folders Operations
 
     public func loadFolders() -> [Folder] {

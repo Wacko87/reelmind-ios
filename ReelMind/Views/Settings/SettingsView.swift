@@ -106,7 +106,24 @@ public struct SettingsView: View {
                     }
                 }
 
-                // Section 3: About
+                // Section 3: Vault Data & Backups
+                Section(header: Text("Vault Management")) {
+                    Button {
+                        Task {
+                            await viewModel.prepareExport()
+                        }
+                    } label: {
+                        Label("Export Vault as Markdown", systemImage: "square.and.arrow.up")
+                    }
+
+                    Button(role: .destructive) {
+                        viewModel.showRestoreConfirmation = true
+                    } label: {
+                        Label("Restore Sample Reels", systemImage: "arrow.counterclockwise")
+                    }
+                }
+
+                // Section 4: About
                 Section(header: Text("About ReelMind")) {
                     HStack {
                         Text("Mode")
@@ -118,7 +135,7 @@ public struct SettingsView: View {
                     HStack {
                         Text("Architecture")
                         Spacer()
-                        Text("Swift 6 + SwiftData")
+                        Text("Swift 6 + MVVM")
                             .foregroundStyle(.secondary)
                     }
 
@@ -131,6 +148,38 @@ public struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .sheet(isPresented: $viewModel.showExportSheet) {
+                NavigationStack {
+                    ScrollView {
+                        Text(viewModel.exportedMarkdown)
+                            .font(.system(.caption, design: .monospaced))
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .navigationTitle("Vault Backup")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Close") { viewModel.showExportSheet = false }
+                        }
+                        ToolbarItem(placement: .primaryAction) {
+                            ShareLink(item: viewModel.exportedMarkdown) {
+                                Label("Share", systemImage: "square.and.arrow.up")
+                            }
+                        }
+                    }
+                }
+            }
+            .confirmationDialog("Restore Initial Samples?", isPresented: $viewModel.showRestoreConfirmation, titleVisibility: .visible) {
+                Button("Restore Samples", role: .destructive) {
+                    Task {
+                        await viewModel.restoreSampleVault()
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will reload the initial tutorial reels into your local vault.")
+            }
         }
     }
 }

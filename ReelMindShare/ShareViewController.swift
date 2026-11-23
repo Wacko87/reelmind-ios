@@ -98,7 +98,7 @@ final class ShareViewController: UIViewController {
             request.httpMethod = "POST"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-            let token = UserDefaults.standard.string(forKey: "reelmind_api_token") ?? ""
+            let token = KeychainService.shared.get(key: "reelmind_api_token") ?? ""
             if !token.isEmpty {
                 request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             }

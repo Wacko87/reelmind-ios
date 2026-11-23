@@ -29,13 +29,13 @@ rm -rf Payload/
 echo "==> 3. Distributing ReelMind.ipa to iCloud Drive..."
 if [ -d "${ICLOUD_ROOT}" ]; then
     cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_ROOT}/ReelMind.ipa"
-    cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_ROOT}/ReelMind_v1.2_Secure.ipa"
-    echo "  -> Copied to iCloud Root: ${ICLOUD_ROOT}/ReelMind.ipa & ReelMind_v1.2_Secure.ipa"
+    cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_ROOT}/ReelMind_v1.3_Polished.ipa"
+    echo "  -> Copied to iCloud Root: ${ICLOUD_ROOT}/ReelMind.ipa & ReelMind_v1.3_Polished.ipa"
 fi
 
 if [ -d "${ICLOUD_DOWNLOADS}" ]; then
     cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_DOWNLOADS}/ReelMind.ipa"
-    cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_DOWNLOADS}/ReelMind_v1.2_Secure.ipa"
+    cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_DOWNLOADS}/ReelMind_v1.3_Polished.ipa"
     echo "  -> Copied to iCloud Downloads: ${ICLOUD_DOWNLOADS}/ReelMind.ipa"
 fi
 

@@ -17,6 +17,11 @@ public final class SettingsViewModel {
     public var connectionSuccess: Bool? = nil
     public var statusMessage: String? = nil
 
+    // Vault Management
+    public var exportedMarkdown: String = ""
+    public var showExportSheet: Bool = false
+    public var showRestoreConfirmation: Bool = false
+
     public init() {
         loadSettings()
     }
@@ -83,5 +88,15 @@ public final class SettingsViewModel {
             }
         }
         isTesting = false
+    }
+
+    public func prepareExport() async {
+        self.exportedMarkdown = await LocalVaultService.shared.exportVaultAsMarkdown()
+        self.showExportSheet = true
+    }
+
+    public func restoreSampleVault() async {
+        await LocalVaultService.shared.restoreSampleReels()
+        statusMessage = "Sample reels restored to vault."
     }
 }
