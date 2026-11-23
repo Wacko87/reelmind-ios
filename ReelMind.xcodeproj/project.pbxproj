@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		0364DDFF568AA916B70AE7FD /* VaultCitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D763CA34D6BC42ECDE03975F /* VaultCitation.swift */; };
 		03EFF82802C761E3B2CF51B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7F24E173AE1113B08F6472A /* Assets.xcassets */; };
+		0547F27A67CE50E60113A8AE /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B40B7FFF3CF0114F913FBE /* ShareView.swift */; };
 		1FD402AED13AB8CF6023D0A8 /* ReelDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB69FA7E6FF5A205C0847BC /* ReelDetailViewModel.swift */; };
 		2EC3B909763B0C1FE6140276 /* IngestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1309F78AD30D79BAED04C0 /* IngestionViewModel.swift */; };
 		3C86DBBE14D19426DA219184 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CE3087ABBC6837AFEC9CEB /* APIClient.swift */; };
+		4C2533D2A4D618DB5F0B8272 /* ReelMindShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 18775950992C5DBD2364DE52 /* ReelMindShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4D43540E7AFDAB974E3C6B8C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B557C25AA2E60FCEDA4A43FD /* SettingsView.swift */; };
 		4E8309BF7A8E342092F20C3D /* ReelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB902C4817E2A3F3F0668F /* ReelListViewModel.swift */; };
 		4FBC57141A27009B74659348 /* PromptVariation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C1E347AAA17F3F082C6FA0 /* PromptVariation.swift */; };
@@ -30,13 +32,41 @@
 		AAC6F49E473671C34011178A /* ReelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17D315D0EBEA1DF246255F1 /* ReelDetailView.swift */; };
 		B0BDB1CEDE24F3A2B18FE662 /* PromptVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA564E096A5FB52FD9339D41 /* PromptVaultViewModel.swift */; };
 		C57781A83B7C9BD592B1A594 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743F77523A578756A34D48C /* AppSettings.swift */; };
+		DD371D194ECA9386F7EB7D09 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E6ECCB3F3E1F83A845D026 /* ShareViewController.swift */; };
 		F188603C50B491DD6FD3C48E /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F57184DD4C0457E1A402E9A /* SettingsViewModel.swift */; };
 		F9EBC2C9EE1E5EC06E023C3F /* ReelCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E891BEB04A8222FD14519F /* ReelCardView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1FF9360B1C3E14919C0FC515 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9E434F2379443EB20CB714C7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A1D88B3B55C44B7D6D350FC;
+			remoteInfo = ReelMindShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D8125288B31B663E45EE725A /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4C2533D2A4D618DB5F0B8272 /* ReelMindShare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		042D08C1E06B8815EFB9349E /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		18775950992C5DBD2364DE52 /* ReelMindShare.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = ReelMindShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F57184DD4C0457E1A402E9A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		25E6ECCB3F3E1F83A845D026 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		27B40B7FFF3CF0114F913FBE /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		27C94E49458E18C524618639 /* AskVaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskVaultView.swift; sourceTree = "<group>"; };
 		3B04E00B43747EAC64E94087 /* Reel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reel.swift; sourceTree = "<group>"; };
 		4A8B09BF3CDFB85AC258ED4F /* IngestionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngestionSheetView.swift; sourceTree = "<group>"; };
@@ -112,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				554DFB4471F48EB22225364B /* ReelMind */,
+				D8AD1D283B1DAB2117B04D47 /* ReelMindShare */,
 				D190126403F37D30309778D5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -196,23 +227,52 @@
 			isa = PBXGroup;
 			children = (
 				AD1CCC8B855287706183A946 /* ReelMind.app */,
+				18775950992C5DBD2364DE52 /* ReelMindShare.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D8AD1D283B1DAB2117B04D47 /* ReelMindShare */ = {
+			isa = PBXGroup;
+			children = (
+				27B40B7FFF3CF0114F913FBE /* ShareView.swift */,
+				25E6ECCB3F3E1F83A845D026 /* ShareViewController.swift */,
+			);
+			path = ReelMindShare;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6A1D88B3B55C44B7D6D350FC /* ReelMindShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 45C5FD12DF49FD7683F11260 /* Build configuration list for PBXNativeTarget "ReelMindShare" */;
+			buildPhases = (
+				26925D77833E8320DB038763 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ReelMindShare;
+			packageProductDependencies = (
+			);
+			productName = ReelMindShare;
+			productReference = 18775950992C5DBD2364DE52 /* ReelMindShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BE981ACF779C98D8F70EB31C /* ReelMind */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 266B2F483D9439DBE4903B37 /* Build configuration list for PBXNativeTarget "ReelMind" */;
 			buildPhases = (
 				538ABE30330D6B0858AD62D3 /* Sources */,
 				22F3BAEFA62941D7E4AC48D8 /* Resources */,
+				D8125288B31B663E45EE725A /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8E7E00B3A968BB30E1458C9A /* PBXTargetDependency */,
 			);
 			name = ReelMind;
 			packageProductDependencies = (
@@ -247,6 +307,7 @@
 			projectRoot = "";
 			targets = (
 				BE981ACF779C98D8F70EB31C /* ReelMind */,
+				6A1D88B3B55C44B7D6D350FC /* ReelMindShare */,
 			);
 		};
 /* End PBXProject section */
@@ -263,6 +324,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		26925D77833E8320DB038763 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0547F27A67CE50E60113A8AE /* ShareView.swift in Sources */,
+				DD371D194ECA9386F7EB7D09 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		538ABE30330D6B0858AD62D3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -295,6 +365,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8E7E00B3A968BB30E1458C9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6A1D88B3B55C44B7D6D350FC /* ReelMindShare */;
+			targetProxy = 1FF9360B1C3E14919C0FC515 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1B656D351D8463E7DC534FEB /* Debug */ = {
@@ -361,6 +439,25 @@
 			};
 			name = Debug;
 		};
+		5EE832723D9B1A90CD45E970 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ReelMindShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reelmind.app.share;
+				PRODUCT_NAME = ReelMindShare;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		7B134383A801D0C173CD3F66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -398,6 +495,25 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.reelmind.app;
 				PRODUCT_NAME = ReelMind;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		85CCDE556C018DF24133E081 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ReelMindShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reelmind.app.share;
+				PRODUCT_NAME = ReelMindShare;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -468,6 +584,15 @@
 			buildConfigurations = (
 				7B134383A801D0C173CD3F66 /* Debug */,
 				84B2DA694FFE9D8D086050C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		45C5FD12DF49FD7683F11260 /* Build configuration list for PBXNativeTarget "ReelMindShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5EE832723D9B1A90CD45E970 /* Debug */,
+				85CCDE556C018DF24133E081 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
