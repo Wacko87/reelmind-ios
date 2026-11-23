@@ -49,6 +49,7 @@ public struct ReelCardView: View {
                         .font(.subheadline)
                 }
                 .buttonStyle(.plain)
+                .sensoryFeedback(.impact(weight: .medium), trigger: reel.status == "favorite")
                 .accessibilityLabel(reel.status == "favorite" ? "Remove from favorites" : "Add to favorites")
             }
 

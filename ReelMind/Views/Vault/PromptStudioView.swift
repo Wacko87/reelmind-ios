@@ -116,6 +116,7 @@ public struct PromptStudioView: View {
             }
             .background(Color(.systemGroupedBackground).ignoresSafeArea())
             .navigationTitle("Prompt Studio")
+            .sensoryFeedback(.success, trigger: viewModel.copyAlert)
             .alert("Prompt Copied!", isPresented: $viewModel.copyAlert) {
                 Button("OK", role: .cancel) {}
             }

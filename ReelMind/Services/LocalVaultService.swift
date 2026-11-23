@@ -11,7 +11,17 @@ public actor LocalVaultService {
         Self.createStorageIfNeeded()
     }
 
+    private static let appGroupIdentifier = "group.com.reelmind.app"
+
     private static var storageDirectory: URL {
+        if let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier) {
+            return containerURL.appendingPathComponent("ReelMind", isDirectory: true)
+        }
+        let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+        return paths[0].appendingPathComponent("ReelMind", isDirectory: true)
+    }
+
+    private static var legacyStorageDirectory: URL {
         let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         return paths[0].appendingPathComponent("ReelMind", isDirectory: true)
     }
@@ -29,8 +39,24 @@ public actor LocalVaultService {
     }
 
     private static func createStorageIfNeeded() {
-        if !FileManager.default.fileExists(atPath: storageDirectory.path) {
-            try? FileManager.default.createDirectory(at: storageDirectory, withIntermediateDirectories: true)
+        let fileManager = FileManager.default
+        if !fileManager.fileExists(atPath: storageDirectory.path) {
+            try? fileManager.createDirectory(at: storageDirectory, withIntermediateDirectories: true)
+        }
+
+        // Migrate from legacy app support directory if moving to App Group container
+        if storageDirectory.path != legacyStorageDirectory.path {
+            let legacyReels = legacyStorageDirectory.appendingPathComponent("reels_vault.json")
+            let targetReels = storageDirectory.appendingPathComponent("reels_vault.json")
+            if fileManager.fileExists(atPath: legacyReels.path) && !fileManager.fileExists(atPath: targetReels.path) {
+                try? fileManager.copyItem(at: legacyReels, to: targetReels)
+            }
+
+            let legacyFolders = legacyStorageDirectory.appendingPathComponent("folders_vault.json")
+            let targetFolders = storageDirectory.appendingPathComponent("folders_vault.json")
+            if fileManager.fileExists(atPath: legacyFolders.path) && !fileManager.fileExists(atPath: targetFolders.path) {
+                try? fileManager.copyItem(at: legacyFolders, to: targetFolders)
+            }
         }
     }
 

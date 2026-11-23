@@ -12,7 +12,8 @@ public final class GeminiService: Sendable {
     }
 
     public var apiKey: String {
-        UserDefaults.standard.string(forKey: "gemini_api_key") ?? ""
+        KeychainService.shared.migrateFromUserDefaultsIfNeeded(key: "gemini_api_key")
+        return KeychainService.shared.get(key: "gemini_api_key") ?? ""
     }
 
     public var hasApiKey: Bool {

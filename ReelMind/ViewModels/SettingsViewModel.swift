@@ -22,25 +22,31 @@ public final class SettingsViewModel {
     }
 
     public func loadSettings() {
-        self.geminiApiKey = UserDefaults.standard.string(forKey: "gemini_api_key") ?? ""
+        KeychainService.shared.migrateFromUserDefaultsIfNeeded(key: "gemini_api_key")
+        KeychainService.shared.migrateFromUserDefaultsIfNeeded(key: "reelmind_api_token")
+
+        self.geminiApiKey = KeychainService.shared.get(key: "gemini_api_key") ?? ""
         self.geminiModel = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-2.5-flash"
         self.useServerMode = UserDefaults.standard.bool(forKey: "reelmind_use_server_mode")
         self.serverURL = UserDefaults.standard.string(forKey: "reelmind_server_url") ?? ""
-        self.apiToken = UserDefaults.standard.string(forKey: "reelmind_api_token") ?? ""
+        self.apiToken = KeychainService.shared.get(key: "reelmind_api_token") ?? ""
     }
 
     public func saveSettings() {
         let trimmedKey = geminiApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
-        UserDefaults.standard.set(trimmedKey, forKey: "gemini_api_key")
+        KeychainService.shared.save(key: "gemini_api_key", value: trimmedKey)
+        UserDefaults.standard.removeObject(forKey: "gemini_api_key")
+
         UserDefaults.standard.set(geminiModel, forKey: "gemini_model")
         UserDefaults.standard.set(useServerMode, forKey: "reelmind_use_server_mode")
 
         let trimmedURL = serverURL.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedToken = apiToken.trimmingCharacters(in: .whitespacesAndNewlines)
         UserDefaults.standard.set(trimmedURL, forKey: "reelmind_server_url")
-        UserDefaults.standard.set(trimmedToken, forKey: "reelmind_api_token")
+        KeychainService.shared.save(key: "reelmind_api_token", value: trimmedToken)
+        UserDefaults.standard.removeObject(forKey: "reelmind_api_token")
 
-        statusMessage = "Settings saved successfully."
+        statusMessage = "Settings saved securely."
     }
 
     public func testConnection() async {

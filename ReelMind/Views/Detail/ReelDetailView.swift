@@ -150,6 +150,8 @@ public struct ReelDetailView: View {
         .background(Color(.systemGroupedBackground).ignoresSafeArea())
         .navigationTitle("Reel Breakdown")
         .navigationBarTitleDisplayMode(.inline)
+        .sensoryFeedback(.success, trigger: viewModel.showCopiedAlert)
+        .sensoryFeedback(.selection, trigger: viewModel.reel.status)
         .alert("Copied to Clipboard", isPresented: $viewModel.showCopiedAlert) {
             Button("OK", role: .cancel) {}
         }

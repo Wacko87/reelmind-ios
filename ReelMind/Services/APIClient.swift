@@ -17,7 +17,8 @@ public final class APIClient: Sendable {
     }
 
     private var currentToken: String {
-        UserDefaults.standard.string(forKey: "reelmind_api_token") ?? ""
+        KeychainService.shared.migrateFromUserDefaultsIfNeeded(key: "reelmind_api_token")
+        return KeychainService.shared.get(key: "reelmind_api_token") ?? ""
     }
 
     private func makeURL(path: String, queryItems: [URLQueryItem] = []) throws -> URL {
