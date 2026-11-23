@@ -1,0 +1,487 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0364DDFF568AA916B70AE7FD /* VaultCitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D763CA34D6BC42ECDE03975F /* VaultCitation.swift */; };
+		03EFF82802C761E3B2CF51B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7F24E173AE1113B08F6472A /* Assets.xcassets */; };
+		1FD402AED13AB8CF6023D0A8 /* ReelDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB69FA7E6FF5A205C0847BC /* ReelDetailViewModel.swift */; };
+		2EC3B909763B0C1FE6140276 /* IngestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1309F78AD30D79BAED04C0 /* IngestionViewModel.swift */; };
+		3C86DBBE14D19426DA219184 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CE3087ABBC6837AFEC9CEB /* APIClient.swift */; };
+		4D43540E7AFDAB974E3C6B8C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B557C25AA2E60FCEDA4A43FD /* SettingsView.swift */; };
+		4E8309BF7A8E342092F20C3D /* ReelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB902C4817E2A3F3F0668F /* ReelListViewModel.swift */; };
+		4FBC57141A27009B74659348 /* PromptVariation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C1E347AAA17F3F082C6FA0 /* PromptVariation.swift */; };
+		58CE9B112005118EC1E6369F /* PromptsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB18E559BF21E26E5EDE4BA /* PromptsSectionView.swift */; };
+		639280C4F2ECE98D3DDA2770 /* FolderFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF594858F29B2112117D97B /* FolderFilterBar.swift */; };
+		66697DFC29BBA8348E5D5B5F /* PromptStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED68DC7341E069DDA36B9F4 /* PromptStudioView.swift */; };
+		724C2392FE3CD25A076788F2 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042D08C1E06B8815EFB9349E /* MainTabView.swift */; };
+		7554510BE53335D35448936D /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16B291A9B3F96628D400C7F /* Folder.swift */; };
+		766322EE5F695AEE4B1B212C /* AskVaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C94E49458E18C524618639 /* AskVaultView.swift */; };
+		84DE910641458922923B9883 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0B71A666CC9A48762C422 /* DashboardView.swift */; };
+		877098B2E91C110B24CBFA87 /* StepsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929804D44F13BAB2786D4E7C /* StepsSectionView.swift */; };
+		8EBCB8B90DC2334B21447E7D /* Reel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04E00B43747EAC64E94087 /* Reel.swift */; };
+		8F9D4634C9FFBB21D1B08177 /* ReelMindError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C7318DD2145AD5749F326 /* ReelMindError.swift */; };
+		96F7426A0AA8095699252480 /* IngestionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8B09BF3CDFB85AC258ED4F /* IngestionSheetView.swift */; };
+		9F56E2E59B00E58D94BD597C /* ReelMindApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B10C16A0691B2B8C73B75B /* ReelMindApp.swift */; };
+		AAC6F49E473671C34011178A /* ReelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17D315D0EBEA1DF246255F1 /* ReelDetailView.swift */; };
+		B0BDB1CEDE24F3A2B18FE662 /* PromptVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA564E096A5FB52FD9339D41 /* PromptVaultViewModel.swift */; };
+		C57781A83B7C9BD592B1A594 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743F77523A578756A34D48C /* AppSettings.swift */; };
+		F188603C50B491DD6FD3C48E /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F57184DD4C0457E1A402E9A /* SettingsViewModel.swift */; };
+		F9EBC2C9EE1E5EC06E023C3F /* ReelCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E891BEB04A8222FD14519F /* ReelCardView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		042D08C1E06B8815EFB9349E /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		1F57184DD4C0457E1A402E9A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		27C94E49458E18C524618639 /* AskVaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskVaultView.swift; sourceTree = "<group>"; };
+		3B04E00B43747EAC64E94087 /* Reel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reel.swift; sourceTree = "<group>"; };
+		4A8B09BF3CDFB85AC258ED4F /* IngestionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngestionSheetView.swift; sourceTree = "<group>"; };
+		5743F77523A578756A34D48C /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		5ED68DC7341E069DDA36B9F4 /* PromptStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptStudioView.swift; sourceTree = "<group>"; };
+		5FDB902C4817E2A3F3F0668F /* ReelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelListViewModel.swift; sourceTree = "<group>"; };
+		6EB18E559BF21E26E5EDE4BA /* PromptsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptsSectionView.swift; sourceTree = "<group>"; };
+		7B1309F78AD30D79BAED04C0 /* IngestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngestionViewModel.swift; sourceTree = "<group>"; };
+		89C1E347AAA17F3F082C6FA0 /* PromptVariation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptVariation.swift; sourceTree = "<group>"; };
+		929804D44F13BAB2786D4E7C /* StepsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsSectionView.swift; sourceTree = "<group>"; };
+		A16B291A9B3F96628D400C7F /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
+		A1F0B71A666CC9A48762C422 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		AD1CCC8B855287706183A946 /* ReelMind.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ReelMind.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B557C25AA2E60FCEDA4A43FD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C17D315D0EBEA1DF246255F1 /* ReelDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelDetailView.swift; sourceTree = "<group>"; };
+		C8B10C16A0691B2B8C73B75B /* ReelMindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelMindApp.swift; sourceTree = "<group>"; };
+		CBF594858F29B2112117D97B /* FolderFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderFilterBar.swift; sourceTree = "<group>"; };
+		D6E891BEB04A8222FD14519F /* ReelCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelCardView.swift; sourceTree = "<group>"; };
+		D763CA34D6BC42ECDE03975F /* VaultCitation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCitation.swift; sourceTree = "<group>"; };
+		E7F24E173AE1113B08F6472A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F6CE3087ABBC6837AFEC9CEB /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		FA564E096A5FB52FD9339D41 /* PromptVaultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptVaultViewModel.swift; sourceTree = "<group>"; };
+		FAB69FA7E6FF5A205C0847BC /* ReelDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelDetailViewModel.swift; sourceTree = "<group>"; };
+		FD6C7318DD2145AD5749F326 /* ReelMindError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelMindError.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0A2A8F521C57196E7275B1B6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E7F24E173AE1113B08F6472A /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		223E732F93F0BC10AA758EF7 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				6EB18E559BF21E26E5EDE4BA /* PromptsSectionView.swift */,
+				C17D315D0EBEA1DF246255F1 /* ReelDetailView.swift */,
+				929804D44F13BAB2786D4E7C /* StepsSectionView.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		357C03A6BA2D946B0A84D031 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F6CE3087ABBC6837AFEC9CEB /* APIClient.swift */,
+				FD6C7318DD2145AD5749F326 /* ReelMindError.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		38B866C99CFFD387B77A634B /* Vault */ = {
+			isa = PBXGroup;
+			children = (
+				27C94E49458E18C524618639 /* AskVaultView.swift */,
+				5ED68DC7341E069DDA36B9F4 /* PromptStudioView.swift */,
+			);
+			path = Vault;
+			sourceTree = "<group>";
+		};
+		3952A86A7DBE79B13BA3B408 /* Ingestion */ = {
+			isa = PBXGroup;
+			children = (
+				4A8B09BF3CDFB85AC258ED4F /* IngestionSheetView.swift */,
+			);
+			path = Ingestion;
+			sourceTree = "<group>";
+		};
+		50BC106818C10326821C6DC5 = {
+			isa = PBXGroup;
+			children = (
+				554DFB4471F48EB22225364B /* ReelMind */,
+				D190126403F37D30309778D5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		554DFB4471F48EB22225364B /* ReelMind */ = {
+			isa = PBXGroup;
+			children = (
+				74244033739661C7C14C8C6A /* App */,
+				6B7CD15514F204491293C927 /* Models */,
+				0A2A8F521C57196E7275B1B6 /* Resources */,
+				357C03A6BA2D946B0A84D031 /* Services */,
+				A1E641FDC898DC1327F28F27 /* ViewModels */,
+				71EA28B6442A3D600D89DE23 /* Views */,
+			);
+			path = ReelMind;
+			sourceTree = "<group>";
+		};
+		6541FBE524D1EBAA436471EE /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				A1F0B71A666CC9A48762C422 /* DashboardView.swift */,
+				CBF594858F29B2112117D97B /* FolderFilterBar.swift */,
+				D6E891BEB04A8222FD14519F /* ReelCardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		6B7CD15514F204491293C927 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5743F77523A578756A34D48C /* AppSettings.swift */,
+				A16B291A9B3F96628D400C7F /* Folder.swift */,
+				89C1E347AAA17F3F082C6FA0 /* PromptVariation.swift */,
+				3B04E00B43747EAC64E94087 /* Reel.swift */,
+				D763CA34D6BC42ECDE03975F /* VaultCitation.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6E72D972E0DBEC472707653E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B557C25AA2E60FCEDA4A43FD /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		71EA28B6442A3D600D89DE23 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				042D08C1E06B8815EFB9349E /* MainTabView.swift */,
+				6541FBE524D1EBAA436471EE /* Dashboard */,
+				223E732F93F0BC10AA758EF7 /* Detail */,
+				3952A86A7DBE79B13BA3B408 /* Ingestion */,
+				6E72D972E0DBEC472707653E /* Settings */,
+				38B866C99CFFD387B77A634B /* Vault */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		74244033739661C7C14C8C6A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C8B10C16A0691B2B8C73B75B /* ReelMindApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A1E641FDC898DC1327F28F27 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7B1309F78AD30D79BAED04C0 /* IngestionViewModel.swift */,
+				FA564E096A5FB52FD9339D41 /* PromptVaultViewModel.swift */,
+				FAB69FA7E6FF5A205C0847BC /* ReelDetailViewModel.swift */,
+				5FDB902C4817E2A3F3F0668F /* ReelListViewModel.swift */,
+				1F57184DD4C0457E1A402E9A /* SettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		D190126403F37D30309778D5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD1CCC8B855287706183A946 /* ReelMind.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BE981ACF779C98D8F70EB31C /* ReelMind */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 266B2F483D9439DBE4903B37 /* Build configuration list for PBXNativeTarget "ReelMind" */;
+			buildPhases = (
+				538ABE30330D6B0858AD62D3 /* Sources */,
+				22F3BAEFA62941D7E4AC48D8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ReelMind;
+			packageProductDependencies = (
+			);
+			productName = ReelMind;
+			productReference = AD1CCC8B855287706183A946 /* ReelMind.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9E434F2379443EB20CB714C7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 991A4F61A920DC9D8172698E /* Build configuration list for PBXProject "ReelMind" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 50BC106818C10326821C6DC5;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D190126403F37D30309778D5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE981ACF779C98D8F70EB31C /* ReelMind */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		22F3BAEFA62941D7E4AC48D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03EFF82802C761E3B2CF51B5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		538ABE30330D6B0858AD62D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C86DBBE14D19426DA219184 /* APIClient.swift in Sources */,
+				C57781A83B7C9BD592B1A594 /* AppSettings.swift in Sources */,
+				766322EE5F695AEE4B1B212C /* AskVaultView.swift in Sources */,
+				84DE910641458922923B9883 /* DashboardView.swift in Sources */,
+				7554510BE53335D35448936D /* Folder.swift in Sources */,
+				639280C4F2ECE98D3DDA2770 /* FolderFilterBar.swift in Sources */,
+				96F7426A0AA8095699252480 /* IngestionSheetView.swift in Sources */,
+				2EC3B909763B0C1FE6140276 /* IngestionViewModel.swift in Sources */,
+				724C2392FE3CD25A076788F2 /* MainTabView.swift in Sources */,
+				66697DFC29BBA8348E5D5B5F /* PromptStudioView.swift in Sources */,
+				4FBC57141A27009B74659348 /* PromptVariation.swift in Sources */,
+				B0BDB1CEDE24F3A2B18FE662 /* PromptVaultViewModel.swift in Sources */,
+				58CE9B112005118EC1E6369F /* PromptsSectionView.swift in Sources */,
+				8EBCB8B90DC2334B21447E7D /* Reel.swift in Sources */,
+				F9EBC2C9EE1E5EC06E023C3F /* ReelCardView.swift in Sources */,
+				AAC6F49E473671C34011178A /* ReelDetailView.swift in Sources */,
+				1FD402AED13AB8CF6023D0A8 /* ReelDetailViewModel.swift in Sources */,
+				4E8309BF7A8E342092F20C3D /* ReelListViewModel.swift in Sources */,
+				9F56E2E59B00E58D94BD597C /* ReelMindApp.swift in Sources */,
+				8F9D4634C9FFBB21D1B08177 /* ReelMindError.swift in Sources */,
+				4D43540E7AFDAB974E3C6B8C /* SettingsView.swift in Sources */,
+				F188603C50B491DD6FD3C48E /* SettingsViewModel.swift in Sources */,
+				877098B2E91C110B24CBFA87 /* StepsSectionView.swift in Sources */,
+				0364DDFF568AA916B70AE7FD /* VaultCitation.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1B656D351D8463E7DC534FEB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		7B134383A801D0C173CD3F66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ReelMind/App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wacko87.ReelMind;
+				PRODUCT_NAME = ReelMind;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84B2DA694FFE9D8D086050C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ReelMind/App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wacko87.ReelMind;
+				PRODUCT_NAME = ReelMind;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C401A3C01A5690004644655F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		266B2F483D9439DBE4903B37 /* Build configuration list for PBXNativeTarget "ReelMind" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7B134383A801D0C173CD3F66 /* Debug */,
+				84B2DA694FFE9D8D086050C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		991A4F61A920DC9D8172698E /* Build configuration list for PBXProject "ReelMind" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B656D351D8463E7DC534FEB /* Debug */,
+				C401A3C01A5690004644655F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9E434F2379443EB20CB714C7 /* Project object */;
+}
