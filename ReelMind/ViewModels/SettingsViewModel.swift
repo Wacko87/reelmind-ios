@@ -18,7 +18,7 @@ public final class SettingsViewModel {
     }
 
     public func loadSettings() {
-        self.serverURL = UserDefaults.standard.string(forKey: "reelmind_server_url") ?? "https://reelmind.wacko87.es"
+        self.serverURL = UserDefaults.standard.string(forKey: "reelmind_server_url") ?? ""
         self.apiToken = UserDefaults.standard.string(forKey: "reelmind_api_token") ?? ""
     }
 

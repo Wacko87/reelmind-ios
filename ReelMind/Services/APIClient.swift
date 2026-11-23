@@ -13,7 +13,7 @@ public final class APIClient: Sendable {
     }
 
     private var currentBaseURL: String {
-        UserDefaults.standard.string(forKey: "reelmind_server_url") ?? "https://reelmind.wacko87.es"
+        UserDefaults.standard.string(forKey: "reelmind_server_url") ?? ""
     }
 
     private var currentToken: String {
@@ -22,6 +22,9 @@ public final class APIClient: Sendable {
 
     private func makeURL(path: String, queryItems: [URLQueryItem] = []) throws -> URL {
         let trimmedBase = currentBaseURL.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        guard !trimmedBase.isEmpty else {
+            throw ReelMindError.serverNotConfigured
+        }
         guard var components = URLComponents(string: "\(trimmedBase)\(path)") else {
             throw ReelMindError.invalidURL
         }

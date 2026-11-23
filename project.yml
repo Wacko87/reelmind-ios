@@ -1,6 +1,6 @@
 name: ReelMind
 options:
-  bundleIdPrefix: com.wacko87
+  bundleIdPrefix: com.reelmind
   deploymentTarget:
     iOS: "17.0"
   xcodeVersion: "16.0"
@@ -22,7 +22,7 @@ targets:
           - "App/Info.plist"
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.wacko87.ReelMind
+        PRODUCT_BUNDLE_IDENTIFIER: com.reelmind.app
         PRODUCT_NAME: ReelMind
         INFOPLIST_FILE: ReelMind/App/Info.plist
         GENERATE_INFOPLIST_FILE: NO

@@ -1,6 +1,7 @@
 import Foundation
 
 public enum ReelMindError: LocalizedError, Sendable {
+    case serverNotConfigured
     case invalidURL
     case unauthorized
     case invalidResponse(statusCode: Int)
@@ -10,6 +11,8 @@ public enum ReelMindError: LocalizedError, Sendable {
 
     public var errorDescription: String? {
         switch self {
+        case .serverNotConfigured:
+            return "Please configure your ReelMind server URL in the Settings tab."
         case .invalidURL:
             return "The server URL provided is invalid."
         case .unauthorized:

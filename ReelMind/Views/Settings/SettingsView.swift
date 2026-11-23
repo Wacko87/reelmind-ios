@@ -13,7 +13,7 @@ public struct SettingsView: View {
                         Text("Server URL")
                             .font(.caption.bold())
                             .foregroundColor(.secondary)
-                        TextField("https://reelmind.wacko87.es", text: $viewModel.serverURL)
+                        TextField("https://api.yourdomain.com", text: $viewModel.serverURL)
                             .keyboardType(.URL)
                             .autocorrectionDisabled()
                             .textInputAutocapitalization(.never)
@@ -23,7 +23,7 @@ public struct SettingsView: View {
                         Text("Access PIN / Bearer Token")
                             .font(.caption.bold())
                             .foregroundColor(.secondary)
-                        SecureField("Optional if local or configured in Unraid", text: $viewModel.apiToken)
+                        SecureField("Optional if unprotected or set via PIN", text: $viewModel.apiToken)
                     }
 
                     Button {
@@ -63,9 +63,9 @@ public struct SettingsView: View {
                     }
 
                     HStack {
-                        Text("Homelab Target")
+                        Text("Backend Target")
                         Spacer()
-                        Text("Unraid 7.3.1")
+                        Text("FastAPI + SQLite / Cloud")
                             .foregroundColor(.secondary)
                     }
                 }

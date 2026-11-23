@@ -6,7 +6,7 @@ public struct AppSettings: Codable, Sendable {
     public var geminiModel: String
 
     public init(
-        serverURL: String = "https://reelmind.wacko87.es",
+        serverURL: String = "",
         apiToken: String = "",
         geminiModel: String = "gemini-2.5-flash"
     ) {
