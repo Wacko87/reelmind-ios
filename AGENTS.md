@@ -77,13 +77,11 @@
 ## 3. Protocolo Obligatorio de Documentación (Obsidian & Trilium)
 Tras cada hito, función añadida o refactorización completada:
 
-1. **Obsidian (Bóveda interna `./Apps Xcode` / `./Docs`):**
-   - Actualizar `./Docs/Bitacora.md` (o `Apps Xcode/Bitacora.md`) añadiendo al final una entrada con:
-     - Fecha y hora.
-     - Tarea realizada o problema resuelto.
-     - Archivos creados o modificados.
-     - Siguientes pasos pendientes.
-   - Si se introduce un patrón arquitectónico o un nuevo servicio, actualizar `./Docs/Arquitectura.md`.
+1. **Obsidian (Bóveda sincronizada en iCloud `./Apps Xcode` / `./Docs`):**
+   - **Bitácora continua:** Actualizar `./Docs/Bitacora.md` cronológicamente con fecha y hora, tarea realizada, archivos creados/modificados y siguientes pasos pendientes.
+   - **Nota independiente por conversación (OBLIGATORIO):** Cada conversación/sesión de Antigravity en este proyecto debe contar con su propia nota dedicada en `./Docs/Conversaciones/YYYY-MM-DD - [Título de la Sesión].md`. Esta nota documentará los objetivos de la sesión, participantes, decisiones técnicas, archivos tocados y próximos pasos, quedando indexada en `./Docs/Bienvenido.md`.
+   - **Arquitectura:** Si se introduce un patrón arquitectónico o un nuevo servicio, actualizar `./Docs/Arquitectura.md`.
+
 2. **Trilium:**
    - Mantener un bloque de texto formateado en `./Docs/Trilium_Sync.md` listo para copiar en Trilium (o preparado para envío vía script API de Trilium si está configurado).
 

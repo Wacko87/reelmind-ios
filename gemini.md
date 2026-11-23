@@ -13,6 +13,7 @@
 ## 3. Cierre Obligatorio de Tarea
 Al finalizar cualquier generación de código o solución técnica, debes incluir siempre al final de tu respuesta:
 
-1. **Entrada para Obsidian:** El bloque Markdown exacto que debe guardarse en `./Docs/Bitacora.md`.
+1. **Entrada para Obsidian:** El bloque Markdown exacto para `./Docs/Bitacora.md` y la referencia a la nota creada/actualizada de la sesión en `./Docs/Conversaciones/`.
 2. **Entrada para Trilium:** Resumen sintético para `./Docs/Trilium_Sync.md`.
 3. **Comando Git:** La línea exacta de `git add`, `git commit` y `git push` lista para ejecutar en la terminal de Antigravity.
+
