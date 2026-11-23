@@ -1,6 +1,11 @@
 name: ReelMind
 options:
   bundleIdPrefix: com.reelmind
+  developmentLanguage: en
+  knownRegions:
+    - en
+    - es
+    - Base
   deploymentTarget:
     iOS: "17.0"
   xcodeVersion: "16.0"

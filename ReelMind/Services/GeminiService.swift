@@ -20,16 +20,28 @@ public final class GeminiService: Sendable {
         !apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
+    private var isCurrentLanguageSpanish: Bool {
+        Locale.current.language.languageCode?.identifier == "es"
+    }
+
     // MARK: - Analyze Content with Gemini
 
     public func analyzeContent(urlOrText: String) async throws -> Reel {
         guard hasApiKey else {
-            throw ReelMindError.serverError(message: "Please add your free Google Gemini API Key in Settings to analyze reels.")
+            let errorMsg = isCurrentLanguageSpanish
+                ? "Por favor añade tu clave gratuita de Google Gemini en Ajustes para analizar reels."
+                : "Please add your free Google Gemini API Key in Settings to analyze reels."
+            throw ReelMindError.serverError(message: errorMsg)
         }
+
+        let isSpanish = isCurrentLanguageSpanish
+        let difficultyInstruction = isSpanish ? "\"Principiante\", \"Intermedio\", or \"Avanzado\"" : "\"Beginner\", \"Intermediate\", or \"Advanced\""
+        let languageInstruction = isSpanish ? "Provide title, summary, and key_steps in Spanish." : "Provide title, summary, and key_steps in English."
 
         let systemInstruction = """
         You are ReelMind AI, an elite technical intelligence extractor specialized in AI tools, prompts, software engineering workflows, and social media reels (Instagram, TikTok, YouTube, X).
         Analyze the provided URL, text, or title, infer the subject matter, and extract structured practical knowledge.
+        \(languageInstruction)
         Return strictly JSON with:
         - title: concise punchy title
         - summary: 2-3 sentence executive summary of what is achieved and why it matters
@@ -37,7 +49,7 @@ public final class GeminiService: Sendable {
         - key_steps: ordered step-by-step blueprint to replicate the trick
         - prompts: literal formulas or prompts ready to copy
         - tags: lowercase categorization tags
-        - difficulty: "Principiante", "Intermedio", or "Avanzado"
+        - difficulty: \(difficultyInstruction)
         - estimated_time: "< 5 min", "15-30 min", or "> 1 hora"
         """
 
@@ -101,11 +113,17 @@ public final class GeminiService: Sendable {
 
     public func optimizePrompt(prompt: String, targetModel: String) async throws -> [PromptVariation] {
         guard hasApiKey else {
-            throw ReelMindError.serverError(message: "Please configure your Gemini API Key in Settings.")
+            let errorMsg = isCurrentLanguageSpanish
+                ? "Por favor configura tu clave de Gemini en Ajustes."
+                : "Please configure your Gemini API Key in Settings."
+            throw ReelMindError.serverError(message: errorMsg)
         }
+
+        let langNote = isCurrentLanguageSpanish ? "Write explanations in Spanish." : "Write explanations in English."
 
         let systemInstruction = """
         You are a Prompt Engineering Expert. Provide 3 optimized, high-fidelity variations of the user's prompt specifically tailored for \(targetModel).
+        \(langNote)
         Return strict JSON array with objects:
         [
           {"label": "Style / Focus name", "prompt": "optimized prompt text", "explanation": "why this variation works best"}
@@ -136,13 +154,19 @@ public final class GeminiService: Sendable {
 
     public func askVault(question: String, vaultContext: String) async throws -> String {
         guard hasApiKey else {
-            throw ReelMindError.serverError(message: "Please configure your Gemini API Key in Settings.")
+            let errorMsg = isCurrentLanguageSpanish
+                ? "Por favor configura tu clave de Gemini en Ajustes."
+                : "Please configure your Gemini API Key in Settings."
+            throw ReelMindError.serverError(message: errorMsg)
         }
+
+        let langNote = isCurrentLanguageSpanish ? "Answer in Spanish." : "Answer in English."
 
         let systemInstruction = """
         You are ReelMind Personal Knowledge Assistant.
         Answer the user's question using ONLY the provided vault knowledge base of reels, AI tools, and prompts.
         If the answer is in the vault, cite the relevant reels. Be concise, actionable, and encouraging.
+        \(langNote)
         """
 
         let prompt = """

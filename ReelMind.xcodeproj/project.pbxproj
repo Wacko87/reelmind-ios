@@ -32,6 +32,7 @@
 		75DB2A9454540EB4D92B9F6C /* PromptVariation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C1E347AAA17F3F082C6FA0 /* PromptVariation.swift */; };
 		75F74D0B4F825BF85BE84948 /* VaultCitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D763CA34D6BC42ECDE03975F /* VaultCitation.swift */; };
 		766322EE5F695AEE4B1B212C /* AskVaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C94E49458E18C524618639 /* AskVaultView.swift */; };
+		76F536D05748C3689BFA4600 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B651CAAE12888CBC8E7A1F14 /* Localizable.xcstrings */; };
 		84DE910641458922923B9883 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0B71A666CC9A48762C422 /* DashboardView.swift */; };
 		87149F8CAA068CF5441C553D /* VaultRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E731E0677D99EF801D59631 /* VaultRepository.swift */; };
 		876A2F36564E0538B5377658 /* Reel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04E00B43747EAC64E94087 /* Reel.swift */; };
@@ -52,6 +53,7 @@
 		DD371D194ECA9386F7EB7D09 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E6ECCB3F3E1F83A845D026 /* ShareViewController.swift */; };
 		F188603C50B491DD6FD3C48E /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F57184DD4C0457E1A402E9A /* SettingsViewModel.swift */; };
 		F1D709C68FBAD5EE4E6C888C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BC27D87948011DF9B7641676 /* PrivacyInfo.xcprivacy */; };
+		F543A45C4157C59C7B6613FE /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C01CB16D07F63E26A7D02636 /* Localizable.xcstrings */; };
 		F9EBC2C9EE1E5EC06E023C3F /* ReelCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E891BEB04A8222FD14519F /* ReelCardView.swift */; };
 /* End PBXBuildFile section */
 
@@ -104,7 +106,9 @@
 		AD1CCC8B855287706183A946 /* ReelMind.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ReelMind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B448A752FB0035F206432D6F /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		B557C25AA2E60FCEDA4A43FD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B651CAAE12888CBC8E7A1F14 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BC27D87948011DF9B7641676 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		C01CB16D07F63E26A7D02636 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		C17D315D0EBEA1DF246255F1 /* ReelDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelDetailView.swift; sourceTree = "<group>"; };
 		C8B10C16A0691B2B8C73B75B /* ReelMindApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelMindApp.swift; sourceTree = "<group>"; };
 		CBF594858F29B2112117D97B /* FolderFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderFilterBar.swift; sourceTree = "<group>"; };
@@ -123,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				E7F24E173AE1113B08F6472A /* Assets.xcassets */,
+				C01CB16D07F63E26A7D02636 /* Localizable.xcstrings */,
 				2AA23A73411D447386417A63 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
@@ -274,6 +279,7 @@
 		D8AD1D283B1DAB2117B04D47 /* ReelMindShare */ = {
 			isa = PBXGroup;
 			children = (
+				B651CAAE12888CBC8E7A1F14 /* Localizable.xcstrings */,
 				BC27D87948011DF9B7641676 /* PrivacyInfo.xcprivacy */,
 				27B40B7FFF3CF0114F913FBE /* ShareView.swift */,
 				25E6ECCB3F3E1F83A845D026 /* ShareViewController.swift */,
@@ -339,6 +345,7 @@
 			knownRegions = (
 				Base,
 				en,
+				es,
 			);
 			mainGroup = 50BC106818C10326821C6DC5;
 			minimizedProjectReferenceProxies = 1;
@@ -359,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03EFF82802C761E3B2CF51B5 /* Assets.xcassets in Resources */,
+				F543A45C4157C59C7B6613FE /* Localizable.xcstrings in Resources */,
 				759102436D0D6CE9E18FFBCD /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +375,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76F536D05748C3689BFA4600 /* Localizable.xcstrings in Resources */,
 				F1D709C68FBAD5EE4E6C888C /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
