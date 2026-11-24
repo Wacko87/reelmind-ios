@@ -106,7 +106,35 @@ public struct SettingsView: View {
                     }
                 }
 
-                // Section 3: Vault Data & Backups
+                // Section 3: Security & Privacy
+                Section {
+                    Toggle("Lock with Face ID / Passcode", isOn: Binding(
+                        get: { AppLockService.shared.isBiometricEnabled },
+                        set: { AppLockService.shared.isBiometricEnabled = $0 }
+                    ))
+
+                    HStack {
+                        Label("Keychain Protection", systemImage: "lock.shield.fill")
+                        Spacer()
+                        Text("Active (Secure Enclave)")
+                            .font(.caption)
+                            .foregroundStyle(.green)
+                    }
+
+                    HStack {
+                        Label("Data Sandbox", systemImage: "iphone")
+                        Spacer()
+                        Text("On-Device Only")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                } header: {
+                    Text("Security & Privacy")
+                } footer: {
+                    Text("When enabled, ReelMind requires Face ID, Touch ID, or your device passcode every time the app is opened.")
+                }
+
+                // Section 4: Vault Data & Backups
                 Section(header: Text("Vault Management")) {
                     Button {
                         Task {

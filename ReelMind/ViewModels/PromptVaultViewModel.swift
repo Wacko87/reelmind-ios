@@ -43,6 +43,10 @@ public final class PromptVaultViewModel {
     public func optimize() async {
         let trimmed = promptInput.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
+        guard trimmed.count <= 4000 else {
+            errorMessage = "Prompt is too long (maximum 4000 characters)."
+            return
+        }
 
         isOptimizing = true
         errorMessage = nil
@@ -58,6 +62,10 @@ public final class PromptVaultViewModel {
     public func askVault() async {
         let trimmed = questionInput.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
+        guard trimmed.count <= 1000 else {
+            errorMessage = "Question is too long (maximum 1000 characters)."
+            return
+        }
 
         isAsking = true
         errorMessage = nil

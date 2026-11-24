@@ -11,6 +11,7 @@
 		03EFF82802C761E3B2CF51B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7F24E173AE1113B08F6472A /* Assets.xcassets */; };
 		0547F27A67CE50E60113A8AE /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B40B7FFF3CF0114F913FBE /* ShareView.swift */; };
 		1FD402AED13AB8CF6023D0A8 /* ReelDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB69FA7E6FF5A205C0847BC /* ReelDetailViewModel.swift */; };
+		29135C082B518D5408D4B0A6 /* AppLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DECC11B268B7680EF6D67DB /* AppLockView.swift */; };
 		2EC3B909763B0C1FE6140276 /* IngestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1309F78AD30D79BAED04C0 /* IngestionViewModel.swift */; };
 		35EF8D86A82A9430F1D97628 /* LocalVaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A204BB9EA56AF8E498661E6 /* LocalVaultService.swift */; };
 		38C471E10399B13FE356B5A5 /* ShareExtensionTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91886C53D417ACB6F9528DA5 /* ShareExtensionTip.swift */; };
@@ -33,6 +34,7 @@
 		75F74D0B4F825BF85BE84948 /* VaultCitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D763CA34D6BC42ECDE03975F /* VaultCitation.swift */; };
 		766322EE5F695AEE4B1B212C /* AskVaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C94E49458E18C524618639 /* AskVaultView.swift */; };
 		76F536D05748C3689BFA4600 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B651CAAE12888CBC8E7A1F14 /* Localizable.xcstrings */; };
+		7A739E0CC8F659E8D4600F7F /* AppLockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9C691A1665BD5D76998431 /* AppLockService.swift */; };
 		84DE910641458922923B9883 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0B71A666CC9A48762C422 /* DashboardView.swift */; };
 		87149F8CAA068CF5441C553D /* VaultRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E731E0677D99EF801D59631 /* VaultRepository.swift */; };
 		876A2F36564E0538B5377658 /* Reel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04E00B43747EAC64E94087 /* Reel.swift */; };
@@ -40,6 +42,7 @@
 		8EBCB8B90DC2334B21447E7D /* Reel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04E00B43747EAC64E94087 /* Reel.swift */; };
 		8F9D4634C9FFBB21D1B08177 /* ReelMindError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C7318DD2145AD5749F326 /* ReelMindError.swift */; };
 		933D7BC70FEABBB93A2B8B50 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B448A752FB0035F206432D6F /* KeychainService.swift */; };
+		957DA384AC27E8B701916D0F /* SecurityAuditLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA93686958C4E652895EA2F /* SecurityAuditLogger.swift */; };
 		9643119C21B188F2A7AA1B0A /* LocalVaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A204BB9EA56AF8E498661E6 /* LocalVaultService.swift */; };
 		96F7426A0AA8095699252480 /* IngestionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8B09BF3CDFB85AC258ED4F /* IngestionSheetView.swift */; };
 		99F08A55452FD3709E890EC7 /* VaultRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E731E0677D99EF801D59631 /* VaultRepository.swift */; };
@@ -49,10 +52,12 @@
 		B0BDB1CEDE24F3A2B18FE662 /* PromptVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA564E096A5FB52FD9339D41 /* PromptVaultViewModel.swift */; };
 		B22ECD5296949D04761F8BED /* ReelMindError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C7318DD2145AD5749F326 /* ReelMindError.swift */; };
 		B419761E5D99D6004191E02A /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA16C301AA1291B0BC58FB /* GeminiService.swift */; };
+		BE79E2323C3563A0DFDBAC8C /* AppLockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9C691A1665BD5D76998431 /* AppLockService.swift */; };
 		C57781A83B7C9BD592B1A594 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743F77523A578756A34D48C /* AppSettings.swift */; };
 		DD371D194ECA9386F7EB7D09 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E6ECCB3F3E1F83A845D026 /* ShareViewController.swift */; };
 		F188603C50B491DD6FD3C48E /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F57184DD4C0457E1A402E9A /* SettingsViewModel.swift */; };
 		F1D709C68FBAD5EE4E6C888C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BC27D87948011DF9B7641676 /* PrivacyInfo.xcprivacy */; };
+		F2D68D525432A2FC8A79CF0C /* SecurityAuditLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA93686958C4E652895EA2F /* SecurityAuditLogger.swift */; };
 		F543A45C4157C59C7B6613FE /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C01CB16D07F63E26A7D02636 /* Localizable.xcstrings */; };
 		F9EBC2C9EE1E5EC06E023C3F /* ReelCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E891BEB04A8222FD14519F /* ReelCardView.swift */; };
 /* End PBXBuildFile section */
@@ -91,6 +96,8 @@
 		2AA23A73411D447386417A63 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3B04E00B43747EAC64E94087 /* Reel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reel.swift; sourceTree = "<group>"; };
 		4A8B09BF3CDFB85AC258ED4F /* IngestionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngestionSheetView.swift; sourceTree = "<group>"; };
+		4E9C691A1665BD5D76998431 /* AppLockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockService.swift; sourceTree = "<group>"; };
+		4EA93686958C4E652895EA2F /* SecurityAuditLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityAuditLogger.swift; sourceTree = "<group>"; };
 		5743F77523A578756A34D48C /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		5ED68DC7341E069DDA36B9F4 /* PromptStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptStudioView.swift; sourceTree = "<group>"; };
 		5FDB902C4817E2A3F3F0668F /* ReelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelListViewModel.swift; sourceTree = "<group>"; };
@@ -101,6 +108,7 @@
 		8E731E0677D99EF801D59631 /* VaultRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultRepository.swift; sourceTree = "<group>"; };
 		91886C53D417ACB6F9528DA5 /* ShareExtensionTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionTip.swift; sourceTree = "<group>"; };
 		929804D44F13BAB2786D4E7C /* StepsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsSectionView.swift; sourceTree = "<group>"; };
+		9DECC11B268B7680EF6D67DB /* AppLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockView.swift; sourceTree = "<group>"; };
 		A16B291A9B3F96628D400C7F /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		A1F0B71A666CC9A48762C422 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		AD1CCC8B855287706183A946 /* ReelMind.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ReelMind.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,10 +155,12 @@
 			isa = PBXGroup;
 			children = (
 				F6CE3087ABBC6837AFEC9CEB /* APIClient.swift */,
+				4E9C691A1665BD5D76998431 /* AppLockService.swift */,
 				DEFA16C301AA1291B0BC58FB /* GeminiService.swift */,
 				B448A752FB0035F206432D6F /* KeychainService.swift */,
 				6A204BB9EA56AF8E498661E6 /* LocalVaultService.swift */,
 				FD6C7318DD2145AD5749F326 /* ReelMindError.swift */,
+				4EA93686958C4E652895EA2F /* SecurityAuditLogger.swift */,
 				8E731E0677D99EF801D59631 /* VaultRepository.swift */,
 			);
 			path = Services;
@@ -238,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				042D08C1E06B8815EFB9349E /* MainTabView.swift */,
+				D253D65D62BC9C7BFAC26DA7 /* Auth */,
 				6541FBE524D1EBAA436471EE /* Dashboard */,
 				223E732F93F0BC10AA758EF7 /* Detail */,
 				3952A86A7DBE79B13BA3B408 /* Ingestion */,
@@ -274,6 +285,14 @@
 				18775950992C5DBD2364DE52 /* ReelMindShare.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D253D65D62BC9C7BFAC26DA7 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				9DECC11B268B7680EF6D67DB /* AppLockView.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		D8AD1D283B1DAB2117B04D47 /* ReelMindShare */ = {
@@ -388,6 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F5CD53C5DBA52529C989065 /* APIClient.swift in Sources */,
+				BE79E2323C3563A0DFDBAC8C /* AppLockService.swift in Sources */,
 				40A7BEFAF427F18A07877826 /* AppSettings.swift in Sources */,
 				62F0273B484DDA92D3377570 /* Folder.swift in Sources */,
 				AC92216C82135D6A6EC48040 /* GeminiService.swift in Sources */,
@@ -396,6 +416,7 @@
 				75DB2A9454540EB4D92B9F6C /* PromptVariation.swift in Sources */,
 				876A2F36564E0538B5377658 /* Reel.swift in Sources */,
 				B22ECD5296949D04761F8BED /* ReelMindError.swift in Sources */,
+				F2D68D525432A2FC8A79CF0C /* SecurityAuditLogger.swift in Sources */,
 				0547F27A67CE50E60113A8AE /* ShareView.swift in Sources */,
 				DD371D194ECA9386F7EB7D09 /* ShareViewController.swift in Sources */,
 				75F74D0B4F825BF85BE84948 /* VaultCitation.swift in Sources */,
@@ -408,6 +429,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C86DBBE14D19426DA219184 /* APIClient.swift in Sources */,
+				7A739E0CC8F659E8D4600F7F /* AppLockService.swift in Sources */,
+				29135C082B518D5408D4B0A6 /* AppLockView.swift in Sources */,
 				C57781A83B7C9BD592B1A594 /* AppSettings.swift in Sources */,
 				766322EE5F695AEE4B1B212C /* AskVaultView.swift in Sources */,
 				84DE910641458922923B9883 /* DashboardView.swift in Sources */,
@@ -430,6 +453,7 @@
 				4E8309BF7A8E342092F20C3D /* ReelListViewModel.swift in Sources */,
 				9F56E2E59B00E58D94BD597C /* ReelMindApp.swift in Sources */,
 				8F9D4634C9FFBB21D1B08177 /* ReelMindError.swift in Sources */,
+				957DA384AC27E8B701916D0F /* SecurityAuditLogger.swift in Sources */,
 				4D43540E7AFDAB974E3C6B8C /* SettingsView.swift in Sources */,
 				F188603C50B491DD6FD3C48E /* SettingsViewModel.swift in Sources */,
 				38C471E10399B13FE356B5A5 /* ShareExtensionTip.swift in Sources */,

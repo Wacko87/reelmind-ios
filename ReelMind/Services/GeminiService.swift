@@ -4,6 +4,7 @@ public final class GeminiService: Sendable {
     public static let shared = GeminiService()
 
     private let session: URLSession
+    private let rateLimiter = RateLimiter(minIntervalSeconds: 2.0)
 
     private init() {
         let config = URLSessionConfiguration.default
@@ -187,6 +188,9 @@ public final class GeminiService: Sendable {
     // MARK: - Internal HTTP Client
 
     private func callGemini(systemInstruction: String, prompt: String, enforceJSON: Bool) async throws -> String {
+        // Enforce rate limiting (Punto 19)
+        try await rateLimiter.checkRateLimit()
+
         let model = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-2.5-flash"
         let endpointString = "https://generativelanguage.googleapis.com/v1beta/models/\(model):generateContent"
 
@@ -250,3 +254,32 @@ public final class GeminiService: Sendable {
         return text
     }
 }
+
+// MARK: - Thread-Safe Rate Limiter Actor (Punto 19)
+
+private actor RateLimiter {
+    private let minInterval: TimeInterval
+    private var lastRequestTime: Date = .distantPast
+
+    init(minIntervalSeconds: TimeInterval) {
+        self.minInterval = minIntervalSeconds
+    }
+
+    func checkRateLimit() throws {
+        let now = Date()
+        let elapsed = now.timeIntervalSince(lastRequestTime)
+        if elapsed < minInterval {
+            let remaining = String(format: "%.1f", minInterval - elapsed)
+            SecurityAuditLogger.shared.log(
+                event: "Rapid API request throttled. Cooldown remaining: \(remaining)s",
+                severity: .warning
+            )
+            let errorMsg = Locale.current.language.languageCode?.identifier == "es"
+                ? "Límite de velocidad: por favor espera \(remaining)s antes de consultar de nuevo."
+                : "Rate limit: please wait \(remaining)s before requesting again."
+            throw ReelMindError.serverError(message: errorMsg)
+        }
+        lastRequestTime = now
+    }
+}
+

@@ -51,5 +51,7 @@
         <key>NSAllowsLocalNetworking</key>
         <true/>
     </dict>
+    <key>NSFaceIDUsageDescription</key>
+    <string>ReelMind uses Face ID to securely lock and protect your AI vault and prompts.</string>
 </dict>
 </plist>
