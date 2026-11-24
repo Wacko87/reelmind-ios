@@ -45,7 +45,7 @@
   - Step-by-step replication blueprints.
   - Detected AI tools & models (*Midjourney, Flux, Claude, ElevenLabs, Cursor*).
   - Difficulty ratings and estimated execution times.
-- **🔐 Enclave Security & Keychain Protection:** API keys and sensitive tokens are encrypted using Apple's Security framework (`kSecClassGenericPassword` with `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`). Zero plaintext storage in `UserDefaults`, plus strict URL scheme sanitization (`https`/`http` only).
+- **🔐 Enclave Security & Biometric Protection:** API keys and sensitive tokens are encrypted using Apple's Security framework (`kSecClassGenericPassword` with `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`). Features optional **Biometric App Lock (Face ID / Touch ID / Passcode)** with auto-lock on backgrounding, client-side API rate limiting, SSRF input sanitization, and structured security auditing via `OSLog`.
 - **🛡️ Apple App Store Review Compliant:**
   - Official Privacy Manifests (`PrivacyInfo.xcprivacy`) declaring approved reason `CA92.1` for user preferences and zero tracking.
   - Strict App Transport Security (ATS) hardening with `NSAllowsLocalNetworking: true` (no `NSAllowsArbitraryLoads`).
