@@ -191,7 +191,11 @@ public final class GeminiService: Sendable {
         // Enforce rate limiting (Punto 19)
         try await rateLimiter.checkRateLimit()
 
-        let model = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-2.5-flash"
+        var model = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-3.8-flash"
+        if model.contains("2.5") {
+            model = "gemini-3.8-flash"
+            UserDefaults.standard.set(model, forKey: "gemini_model")
+        }
         let endpointString = "https://generativelanguage.googleapis.com/v1beta/models/\(model):generateContent"
 
         guard let url = URL(string: endpointString) else {

@@ -38,8 +38,10 @@ public struct SettingsView: View {
                     }
 
                     Picker("AI Model", selection: $viewModel.geminiModel) {
-                        Text("Gemini 2.5 Flash (Recommended)").tag("gemini-2.5-flash")
-                        Text("Gemini 2.5 Pro (Deep Reasoning)").tag("gemini-2.5-pro")
+                        Text("Gemini 3.8 Flash (Recommended)").tag("gemini-3.8-flash")
+                        Text("Gemini 3.8 Pro (Deep Reasoning)").tag("gemini-3.8-pro")
+                        Text("Gemini 2.0 Flash").tag("gemini-2.0-flash")
+                        Text("Gemini 1.5 Flash").tag("gemini-1.5-flash")
                     }
                     .onChange(of: viewModel.geminiModel) { _, _ in
                         viewModel.saveSettings()

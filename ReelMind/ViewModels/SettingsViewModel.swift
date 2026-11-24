@@ -6,7 +6,7 @@ import Observation
 public final class SettingsViewModel {
     // Local / App Store AI Engine
     public var geminiApiKey: String = ""
-    public var geminiModel: String = "gemini-2.5-flash"
+    public var geminiModel: String = "gemini-3.8-flash"
 
     // Optional Homelab / Server Mode
     public var useServerMode: Bool = false
@@ -31,7 +31,12 @@ public final class SettingsViewModel {
         KeychainService.shared.migrateFromUserDefaultsIfNeeded(key: "reelmind_api_token")
 
         self.geminiApiKey = KeychainService.shared.get(key: "gemini_api_key") ?? ""
-        self.geminiModel = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-2.5-flash"
+        var savedModel = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-3.8-flash"
+        if savedModel.contains("2.5") {
+            savedModel = "gemini-3.8-flash"
+            UserDefaults.standard.set(savedModel, forKey: "gemini_model")
+        }
+        self.geminiModel = savedModel
         self.useServerMode = UserDefaults.standard.bool(forKey: "reelmind_use_server_mode")
         self.serverURL = UserDefaults.standard.string(forKey: "reelmind_server_url") ?? ""
         self.apiToken = KeychainService.shared.get(key: "reelmind_api_token") ?? ""

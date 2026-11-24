@@ -1004,6 +1004,42 @@
         }
       }
     },
+    "Gemini 3.8 Flash (Recommended)": {
+      "comment": "SettingsView: AI model option",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemini 3.8 Flash (Recommended)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemini 3.8 Flash (Recomendado)"
+          }
+        }
+      }
+    },
+    "Gemini 3.8 Pro (Deep Reasoning)": {
+      "comment": "SettingsView: AI model option",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemini 3.8 Pro (Deep Reasoning)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemini 3.8 Pro (Razonamiento Profundo)"
+          }
+        }
+      }
+    },
     "Gemini 2.5 Flash (Recommended)": {
       "extractionState": "manual",
       "localizations": {
