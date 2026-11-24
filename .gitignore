@@ -12,3 +12,15 @@ xcuserdata/
 
 # Archivos de sistema macOS
 .DS_Store
+
+# Secrets & Environment (Blindaje preventivo)
+.env
+.env.*
+*.env
+*.key
+*.pem
+*.cert
+*.p8
+*.p12
+*.mobileprovision
+
