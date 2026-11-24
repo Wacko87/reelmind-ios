@@ -5,6 +5,13 @@ DerivedData/
 *.xcuserdata/
 xcuserdata/
 
+# Tooling de Asistente / Skills (Excluido del repositorio de la app)
+.agents/
+
+# Documentación local sincronizada (Obsidian iCloud symlinks)
+Apps Xcode
+Docs
+
 # Obsidian (conserva notas y plugins, ignora caché y ventanas)
 **/.obsidian/workspace.json
 **/.obsidian/workspace-mobile.json

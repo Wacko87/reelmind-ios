@@ -98,3 +98,23 @@ Tras cada hito, función añadida o refactorización completada:
   git commit -m "tipo: descripción clara del cambio"
   git push origin main
   ```
+
+## 5. Estándares Obligatorios de Repositorio Limpio y Producción (Git, CI, Tests, Licencia y Privacidad)
+En toda app nueva y en el mantenimiento de las existentes, se deben aplicar obligatoriamente estos 5 principios de calidad:
+
+1. **Higiene Estricta de Git (Cero Tooling en el Repo):**
+   - El directorio `.agents/` (skills, evals, prompts) y las carpetas de herramientas del asistente deben permanecer **SIEMPRE en `.gitignore`**. Nunca se commitean al producto en GitHub.
+   - Los enlaces simbólicos locales de macOS (`Apps Xcode`, `Docs -> /Users/...`) **NUNCA se commitean a Git**. En GitHub aparecen como archivos rotos y exponen la ruta privada del Mac del usuario. La sincronización de Obsidian se mantiene en local mediante `.gitignore`.
+
+2. **Legal y Cumplimiento App Store:**
+   - Todo repositorio debe incluir en la raíz su archivo oficial de licencia (`LICENSE`, habitualmente MIT) y su documento formal de política de privacidad (`PrivacyPolicy.md`) para cumplir las directrices de Apple.
+
+3. **Suite de Pruebas Automatizadas (Swift Testing):**
+   - Todo proyecto debe incluir un target de pruebas unitarias (`Tests/` / `[App]Tests`) con el framework moderno de Apple **Swift Testing** (`@Test`, `#expect`), cubriendo seguridad, validación de inputs, persistencia y servicios clave.
+
+4. **Integración Continua (GitHub Actions CI):**
+   - Todo repositorio debe contar con `.github/workflows/ci.yml` configurado para compilar (`xcodebuild build`) y ejecutar los tests (`xcodebuild test`) sobre el simulador universal de iOS en cada push o pull request a `main`.
+
+5. **Fuente Única de Verdad (XcodeGen):**
+   - Cuando se utilice `project.yml` junto a `[App].xcodeproj`, el archivo `README.md` debe declarar explícitamente a `project.yml` como la fuente de verdad declarativa del proyecto, explicando el comando `xcodegen generate` para evitar discrepancias.
+
