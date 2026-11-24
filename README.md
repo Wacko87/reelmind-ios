@@ -20,6 +20,21 @@
 
 ---
 
+## 📱 App Showcase
+
+<p align="center">
+  <img src="assets/screenshots/01_vault.png" width="23%" alt="Vault & Dashboard" />
+  <img src="assets/screenshots/02_prompt_studio.png" width="23%" alt="Prompt Studio" />
+  <img src="assets/screenshots/03_ask_vault.png" width="23%" alt="Ask AI" />
+  <img src="assets/screenshots/04_settings.png" width="23%" alt="Settings & Privacy" />
+</p>
+
+<p align="center">
+  <sub><strong>1. Vault & AI Tool Filtering</strong> &nbsp;•&nbsp; <strong>2. Prompt Studio & Variations</strong> &nbsp;•&nbsp; <strong>3. Ask AI Assistant</strong> &nbsp;•&nbsp; <strong>4. Security & Keychain Settings</strong></sub>
+</p>
+
+---
+
 ## 🌟 Highlights & Key Features
 
 - **🌍 Native Bilingual Support (English & Spanish):** Powered by Apple's modern **String Catalogs (`.xcstrings`)** with 90+ translated keys. Includes **Adaptive AI Extraction** where Google Gemini automatically formats summaries, blueprints, and difficulty ratings in Spanish for Spanish-configured devices and English for international users.
