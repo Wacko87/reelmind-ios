@@ -185,6 +185,23 @@ public final class GeminiService: Sendable {
         )
     }
 
+    // MARK: - Health Check / Test API Key
+
+    public func testApiKey() async throws {
+        guard hasApiKey else {
+            let errorMsg = isCurrentLanguageSpanish
+                ? "Por favor añade tu clave de Gemini en Ajustes."
+                : "Please add your Gemini API Key in Settings."
+            throw ReelMindError.serverError(message: errorMsg)
+        }
+
+        _ = try await callGemini(
+            systemInstruction: "You are a health check system. Reply with 'OK'.",
+            prompt: "ping",
+            enforceJSON: false
+        )
+    }
+
     // MARK: - Internal HTTP Client
 
     private func callGemini(systemInstruction: String, prompt: String, enforceJSON: Bool) async throws -> String {
@@ -204,6 +221,7 @@ public final class GeminiService: Sendable {
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.timeoutInterval = 15.0
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(apiKey.trimmingCharacters(in: .whitespacesAndNewlines), forHTTPHeaderField: "x-goog-api-key")
 

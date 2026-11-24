@@ -65,6 +65,10 @@ public final class SettingsViewModel {
         connectionSuccess = nil
         statusMessage = nil
 
+        defer {
+            isTesting = false
+        }
+
         if useServerMode {
             do {
                 _ = try await APIClient.shared.checkAuthStatus()
@@ -79,20 +83,20 @@ public final class SettingsViewModel {
             guard !geminiApiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
                 connectionSuccess = false
                 statusMessage = "Please enter your Gemini API Key first."
-                isTesting = false
                 return
             }
 
             do {
-                _ = try await GeminiService.shared.optimizePrompt(prompt: "Hello", targetModel: "Midjourney")
+                try await GeminiService.shared.testApiKey()
                 connectionSuccess = true
-                statusMessage = "Gemini AI Engine verified and ready!"
+                statusMessage = Locale.current.language.languageCode?.identifier == "es"
+                    ? "¡Motor Gemini verificado y listo!"
+                    : "Gemini AI Engine verified and ready!"
             } catch {
                 connectionSuccess = false
                 statusMessage = "Gemini Error: \(error.localizedDescription)"
             }
         }
-        isTesting = false
     }
 
     public func prepareExport() async {

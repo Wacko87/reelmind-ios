@@ -60,6 +60,7 @@ public struct SettingsView: View {
                             Text("Verify AI Engine")
                         }
                     }
+                    .disabled(viewModel.isTesting)
 
                     if let message = viewModel.statusMessage {
                         HStack(spacing: 6) {
