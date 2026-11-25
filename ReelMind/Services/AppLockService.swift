@@ -1,6 +1,7 @@
 import Foundation
 import LocalAuthentication
 import Observation
+import UIKit
 
 @Observable
 @MainActor
@@ -9,6 +10,7 @@ public final class AppLockService {
 
     public var isLocked: Bool = false
     public var authenticationError: String? = nil
+    public var isPermissionDenied: Bool = false
 
     public var isBiometricEnabled: Bool {
         get {
@@ -36,6 +38,21 @@ public final class AppLockService {
         }
     }
 
+    @available(iOSApplicationExtension, unavailable)
+    public func openSystemSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    public func emergencyUnlock() {
+        self.isBiometricEnabled = false
+        self.isLocked = false
+        self.authenticationError = nil
+        self.isPermissionDenied = false
+        SecurityAuditLogger.shared.log(event: "App Lock emergency unlocked due to permission lockout.", severity: .warning)
+    }
+
     public func authenticate() async {
         guard isBiometricEnabled else {
             isLocked = false
@@ -56,10 +73,20 @@ public final class AppLockService {
                 if success {
                     self.isLocked = false
                     self.authenticationError = nil
+                    self.isPermissionDenied = false
                     SecurityAuditLogger.shared.log(event: "Biometric unlock successful.", severity: .info)
                 }
             } catch {
-                self.authenticationError = error.localizedDescription
+                let nsError = error as NSError
+                if nsError.domain == LAErrorDomain && (nsError.code == LAError.biometryNotAvailable.rawValue || nsError.code == 6 || nsError.code == -6) {
+                    self.isPermissionDenied = true
+                    self.authenticationError = Locale.current.language.languageCode?.identifier == "es"
+                        ? "Permiso de Face ID desactivado. Actívalo en Ajustes de iOS > ReelMind."
+                        : "Face ID permission denied. Enable it in iOS Settings > ReelMind."
+                } else {
+                    self.isPermissionDenied = false
+                    self.authenticationError = error.localizedDescription
+                }
                 self.isLocked = true
                 SecurityAuditLogger.shared.log(event: "Biometric unlock failed or cancelled: \(error.localizedDescription)", severity: .warning)
             }

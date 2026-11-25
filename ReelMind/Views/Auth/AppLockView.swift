@@ -36,31 +36,56 @@ public struct AppLockView: View {
                 }
 
                 if let error = lockService.authenticationError {
-                    Text(error)
-                        .font(.caption)
-                        .foregroundStyle(.red)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 24)
+                    VStack(spacing: 8) {
+                        Text(error)
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 24)
+
+                        if lockService.isPermissionDenied {
+                            Button {
+                                lockService.openSystemSettings()
+                            } label: {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "gearshape.fill")
+                                    Text("Abrir Ajustes de iOS")
+                                }
+                                .font(.footnote.bold())
+                                .foregroundStyle(Color.accentColor)
+                            }
+                        }
+                    }
                 }
 
                 Spacer()
 
-                Button {
-                    Task {
-                        await lockService.authenticate()
+                VStack(spacing: 12) {
+                    Button {
+                        Task {
+                            await lockService.authenticate()
+                        }
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "faceid")
+                                .font(.title3)
+                            Text("Unlock Vault")
+                                .font(.headline)
+                        }
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(Color.accentColor)
+                        .clipShape(.rect(cornerRadius: 14))
                     }
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "faceid")
-                            .font(.title3)
-                        Text("Unlock Vault")
-                            .font(.headline)
+
+                    if lockService.isPermissionDenied {
+                        Button("Desactivar bloqueo Face ID") {
+                            lockService.emergencyUnlock()
+                        }
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                     }
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
-                    .background(Color.accentColor)
-                    .clipShape(.rect(cornerRadius: 14))
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 32)
