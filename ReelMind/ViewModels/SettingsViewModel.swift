@@ -6,16 +6,20 @@ import Observation
 public final class SettingsViewModel {
     // Local / App Store AI Engine
     public var geminiApiKey: String = ""
-    public var geminiModel: String = "gemini-3.8-flash"
+    public var geminiModel: String = "gemini-3.5-flash-lite"
 
     // Optional Homelab / Server Mode
-    public var useServerMode: Bool = false
-    public var serverURL: String = ""
-    public var apiToken: String = ""
+    public var useServerMode: Bool = true
+    public var serverURL: String = "https://reels.wacko87.es"
+    public var apiToken: String = "3004"
 
     public var isTesting: Bool = false
     public var connectionSuccess: Bool? = nil
     public var statusMessage: String? = nil
+
+    public var isTestingServer: Bool = false
+    public var serverConnectionSuccess: Bool? = nil
+    public var serverStatusMessage: String? = nil
 
     // Vault Management
     public var exportedMarkdown: String = ""
@@ -37,9 +41,19 @@ public final class SettingsViewModel {
             UserDefaults.standard.set(savedModel, forKey: "gemini_model")
         }
         self.geminiModel = savedModel
-        self.useServerMode = UserDefaults.standard.bool(forKey: "reelmind_use_server_mode")
-        self.serverURL = UserDefaults.standard.string(forKey: "reelmind_server_url") ?? ""
-        self.apiToken = KeychainService.shared.get(key: "reelmind_api_token") ?? ""
+
+        if UserDefaults.standard.object(forKey: "reelmind_use_server_mode") != nil {
+            self.useServerMode = UserDefaults.standard.bool(forKey: "reelmind_use_server_mode")
+        } else {
+            self.useServerMode = true
+            UserDefaults.standard.set(true, forKey: "reelmind_use_server_mode")
+        }
+
+        let savedURL = UserDefaults.standard.string(forKey: "reelmind_server_url") ?? ""
+        self.serverURL = savedURL.isEmpty ? "https://reels.wacko87.es" : savedURL
+
+        let savedToken = KeychainService.shared.get(key: "reelmind_api_token") ?? ""
+        self.apiToken = savedToken.isEmpty ? "3004" : savedToken
     }
 
     public func saveSettings() {
@@ -59,26 +73,58 @@ public final class SettingsViewModel {
         statusMessage = "Settings saved securely."
     }
 
-    public func testConnection() async {
+    public func testServerConnection() async {
+        isTestingServer = true
+        serverConnectionSuccess = nil
+        serverStatusMessage = nil
+
+        defer { isTestingServer = false }
+
         saveSettings()
-        isTesting = true
-        connectionSuccess = nil
-        statusMessage = nil
 
-        defer {
-            isTesting = false
-        }
-
-        if useServerMode {
-            do {
-                _ = try await APIClient.shared.checkAuthStatus()
-                connectionSuccess = true
-                statusMessage = "Connected to ReelMind server successfully."
-            } catch {
-                connectionSuccess = false
-                statusMessage = "Server connection failed: \(error.localizedDescription)"
+        do {
+            let trimmedPin = apiToken.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmedPin.isEmpty {
+                _ = try await APIClient.shared.loginWithPIN(pin: trimmedPin)
             }
+            let status = try await APIClient.shared.checkAuthStatus()
+            if status.authRequired && !status.isAuthenticated {
+                serverConnectionSuccess = false
+                serverStatusMessage = Locale.current.language.languageCode?.identifier == "es"
+                    ? "PIN incorrecto o sesión no autorizada."
+                    : "Incorrect PIN or unauthorized session."
+            } else {
+                serverConnectionSuccess = true
+                serverStatusMessage = Locale.current.language.languageCode?.identifier == "es"
+                    ? "¡Conectado al servidor ReelMind (reels.wacko87.es) con éxito!"
+                    : "Connected to ReelMind server successfully!"
+            }
+        } catch {
+            serverConnectionSuccess = false
+            serverStatusMessage = "Error del servidor: \(error.localizedDescription)"
+        }
+    }
+
+    public func testConnection() async {
+        if useServerMode {
+            isTesting = true
+            connectionSuccess = nil
+            statusMessage = nil
+            defer { isTesting = false }
+
+            await testServerConnection()
+            self.connectionSuccess = self.serverConnectionSuccess
+            self.statusMessage = self.serverStatusMessage
         } else {
+            saveSettings()
+            isTesting = true
+            connectionSuccess = nil
+            statusMessage = nil
+
+            defer {
+                isTesting = false
+            }
+
             // Test local Gemini API Key
             guard !geminiApiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
                 connectionSuccess = false

@@ -210,6 +210,42 @@ public final class APIClient: Sendable {
 
     // MARK: - Authentication & Status
 
+    public func loginWithPIN(pin: String) async throws -> Bool {
+        let url = try makeURL(path: "/api/auth/login")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let payload = ["pin": pin.trimmingCharacters(in: .whitespacesAndNewlines)]
+        request.httpBody = try JSONSerialization.data(withJSONObject: payload)
+
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw ReelMindError.invalidResponse(statusCode: -1)
+        }
+
+        guard (200...299).contains(httpResponse.statusCode) else {
+            if let errorObj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let detail = errorObj["detail"] as? String {
+                throw ReelMindError.serverError(message: detail)
+            }
+            throw ReelMindError.invalidResponse(statusCode: httpResponse.statusCode)
+        }
+
+        struct LoginRes: Codable {
+            let success: Bool
+            let token: String?
+            let message: String?
+        }
+
+        let decoded = try JSONDecoder().decode(LoginRes.self, from: data)
+        if let token = decoded.token, !token.isEmpty {
+            KeychainService.shared.save(key: "reelmind_api_token", value: token)
+            return true
+        }
+        return decoded.success
+    }
+
     public func checkAuthStatus() async throws -> AuthStatusResponse {
         let url = try makeURL(path: "/api/auth/status")
         var request = URLRequest(url: url)

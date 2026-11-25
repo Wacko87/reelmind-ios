@@ -1128,6 +1128,40 @@
         }
       }
     },
+    "Verify Server Connection": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verify Server Connection"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verificar Conexión con Servidor"
+          }
+        }
+      }
+    },
+    "Server mode connects to your Unraid instance (reels.wacko87.es), downloading the actual video with yt-dlp to extract text on screen (OCR), prompts, and audio with 100% fidelity.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server mode connects to your Unraid instance (reels.wacko87.es), downloading the actual video with yt-dlp to extract text on screen (OCR), prompts, and audio with 100% fidelity."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El modo servidor conecta con tu instancia de Unraid (reels.wacko87.es), descargando el vídeo real con yt-dlp para extraer texto en pantalla (OCR), prompts y audio con 100% de fidelidad."
+          }
+        }
+      }
+    },
     "Verify AI Engine": {
       "extractionState": "manual",
       "localizations": {

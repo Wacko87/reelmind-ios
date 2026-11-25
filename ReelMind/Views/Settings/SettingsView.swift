@@ -77,7 +77,7 @@ public struct SettingsView: View {
                 }
 
                 // Section 2: Advanced Homelab Mode (Optional)
-                Section(header: Text("Advanced Setup")) {
+                Section {
                     Toggle("Self-Hosted Server Mode", isOn: $viewModel.useServerMode)
                         .onChange(of: viewModel.useServerMode) { _, _ in
                             viewModel.saveSettings()
@@ -88,7 +88,7 @@ public struct SettingsView: View {
                             Text("Server URL")
                                 .font(.caption.bold())
                                 .foregroundStyle(.secondary)
-                            TextField("https://api.yourdomain.com", text: $viewModel.serverURL)
+                            TextField("https://reels.wacko87.es", text: $viewModel.serverURL)
                                 .keyboardType(.URL)
                                 .autocorrectionDisabled()
                                 .textInputAutocapitalization(.never)
@@ -101,12 +101,40 @@ public struct SettingsView: View {
                             Text("Access PIN / Token")
                                 .font(.caption.bold())
                                 .foregroundStyle(.secondary)
-                            SecureField("Optional PIN", text: $viewModel.apiToken)
+                            SecureField("PIN (ej. 3004)", text: $viewModel.apiToken)
                                 .onChange(of: viewModel.apiToken) { _, _ in
                                     viewModel.saveSettings()
                                 }
                         }
+
+                        Button {
+                            Task {
+                                await viewModel.testServerConnection()
+                            }
+                        } label: {
+                            HStack {
+                                if viewModel.isTestingServer {
+                                    ProgressView()
+                                        .padding(.trailing, 4)
+                                }
+                                Text("Verify Server Connection")
+                            }
+                        }
+                        .disabled(viewModel.isTestingServer)
+
+                        if let msg = viewModel.serverStatusMessage {
+                            HStack(spacing: 6) {
+                                Image(systemName: viewModel.serverConnectionSuccess == true ? "checkmark.circle.fill" : "exclamationmark.circle.fill")
+                                Text(msg)
+                            }
+                            .font(.footnote)
+                            .foregroundStyle(viewModel.serverConnectionSuccess == true ? .green : .red)
+                        }
                     }
+                } header: {
+                    Text("Advanced Setup")
+                } footer: {
+                    Text("Server mode connects to your Unraid instance (reels.wacko87.es), downloading the actual video with yt-dlp to extract text on screen (OCR), prompts, and audio with 100% fidelity.")
                 }
 
                 // Section 3: Security & Privacy
