@@ -94,6 +94,20 @@ public final class ReelListViewModel {
         }
     }
 
+    public func inviteMember(username: String) async -> Bool {
+        guard let org = selectedOrganization else { return false }
+        let clean = username.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        guard !clean.isEmpty else { return false }
+        do {
+            _ = try await APIClient.shared.addOrganizationMember(orgId: org.id, username: clean)
+            await loadData()
+            return true
+        } catch {
+            self.errorMessage = "Error invitando a @\(clean): \(error.localizedDescription)"
+            return false
+        }
+    }
+
     public func deleteReel(id: String) async {
         do {
             try await repository.deleteReel(id: id)

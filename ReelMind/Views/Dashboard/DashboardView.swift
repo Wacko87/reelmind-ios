@@ -6,6 +6,8 @@ public struct DashboardView: View {
     @State private var showingIngestionSheet = false
     @State private var showNewOrgAlert = false
     @State private var newOrgName = ""
+    @State private var showInviteMemberAlert = false
+    @State private var inviteUsername = ""
     private let shareTip = ShareExtensionTip()
 
     public init() {}
@@ -187,6 +189,17 @@ public struct DashboardView: View {
                             }
                         }
 
+                        if let currentOrg = viewModel.selectedOrganization {
+                            Section("Equipo \(currentOrg.name)") {
+                                Button {
+                                    inviteUsername = ""
+                                    showInviteMemberAlert = true
+                                } label: {
+                                    Label("Invitar Miembro (@usuario)...", systemImage: "person.badge.plus")
+                                }
+                            }
+                        }
+
                         Section {
                             Button {
                                 newOrgName = ""
@@ -232,6 +245,20 @@ public struct DashboardView: View {
                 Button("Cancelar", role: .cancel) {}
             } message: {
                 Text("Crea una organización para compartir una bóveda de trucos y herramientas con otros miembros.")
+            }
+            .alert("Invitar Miembro", isPresented: $showInviteMemberAlert) {
+                TextField("Nombre de usuario (ej: carlos)", text: $inviteUsername)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+                Button("Invitar") {
+                    let user = inviteUsername
+                    Task {
+                        _ = await viewModel.inviteMember(username: user)
+                    }
+                }
+                Button("Cancelar", role: .cancel) {}
+            } message: {
+                Text("Introduce el nombre del usuario registrado para darle acceso a esta bóveda.")
             }
             .sheet(isPresented: $showingIngestionSheet) {
                 IngestionSheetView(orgId: viewModel.selectedOrganization?.id) {
