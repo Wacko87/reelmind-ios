@@ -8,7 +8,7 @@ public struct AppSettings: Codable, Sendable {
     public init(
         serverURL: String = "",
         apiToken: String = "",
-        geminiModel: String = "gemini-3.8-flash"
+        geminiModel: String = "gemini-3.5-flash-lite"
     ) {
         self.serverURL = serverURL
         self.apiToken = apiToken

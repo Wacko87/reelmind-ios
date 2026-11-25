@@ -1004,6 +1004,60 @@
         }
       }
     },
+    "Gemini 3.5 Flash Lite (Recommended)": {
+      "comment": "SettingsView: AI model option",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemini 3.5 Flash Lite (Recommended)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemini 3.5 Flash Lite (Recomendado)"
+          }
+        }
+      }
+    },
+    "Gemini 3.8 Flash (Balanced)": {
+      "comment": "SettingsView: AI model option",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemini 3.8 Flash (Balanced)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemini 3.8 Flash (Equilibrado)"
+          }
+        }
+      }
+    },
+    "Gemini 3.1 Flash Lite": {
+      "comment": "SettingsView: AI model option",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemini 3.1 Flash Lite"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemini 3.1 Flash Lite"
+          }
+        }
+      }
+    },
     "Gemini 3.8 Flash (Recommended)": {
       "comment": "SettingsView: AI model option",
       "extractionState": "manual",

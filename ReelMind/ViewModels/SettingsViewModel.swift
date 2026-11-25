@@ -31,9 +31,9 @@ public final class SettingsViewModel {
         KeychainService.shared.migrateFromUserDefaultsIfNeeded(key: "reelmind_api_token")
 
         self.geminiApiKey = KeychainService.shared.get(key: "gemini_api_key") ?? ""
-        var savedModel = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-3.8-flash"
+        var savedModel = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-3.5-flash-lite"
         if savedModel.contains("2.5") {
-            savedModel = "gemini-3.8-flash"
+            savedModel = "gemini-3.5-flash-lite"
             UserDefaults.standard.set(savedModel, forKey: "gemini_model")
         }
         self.geminiModel = savedModel

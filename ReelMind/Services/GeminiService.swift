@@ -220,28 +220,28 @@ public final class GeminiService: Sendable {
         }
     }
 
-    // MARK: - Internal HTTP Client
+    // MARK: - Internal HTTP Client with Automatic Model Failover & Exponential Backoff
+
+    private let fallbackModels = [
+        "gemini-3.5-flash-lite",
+        "gemini-3.8-flash",
+        "gemini-3.1-flash-lite"
+    ]
 
     private func callGemini(systemInstruction: String, prompt: String, enforceJSON: Bool) async throws -> String {
         // Enforce rate limiting (Punto 19)
         try await rateLimiter.checkRateLimit()
 
-        var model = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-3.8-flash"
-        if model.contains("2.5") {
-            model = "gemini-3.8-flash"
-            UserDefaults.standard.set(model, forKey: "gemini_model")
-        }
-        let endpointString = "https://generativelanguage.googleapis.com/v1beta/models/\(model):generateContent"
-
-        guard let url = URL(string: endpointString) else {
-            throw ReelMindError.invalidURL
+        var userModel = UserDefaults.standard.string(forKey: "gemini_model") ?? "gemini-3.5-flash-lite"
+        if userModel.contains("2.5") {
+            userModel = "gemini-3.5-flash-lite"
+            UserDefaults.standard.set(userModel, forKey: "gemini_model")
         }
 
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.timeoutInterval = 60.0
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(apiKey.trimmingCharacters(in: .whitespacesAndNewlines), forHTTPHeaderField: "x-goog-api-key")
+        var modelsToTry = [userModel]
+        for fb in fallbackModels where fb != userModel {
+            modelsToTry.append(fb)
+        }
 
         var generationConfig: [String: Any] = [
             "temperature": 0.3,
@@ -265,33 +265,94 @@ public final class GeminiService: Sendable {
             "generationConfig": generationConfig
         ]
 
-        request.httpBody = try JSONSerialization.data(withJSONObject: payload)
+        let httpBody = try JSONSerialization.data(withJSONObject: payload)
+        var lastError: Error?
 
-        let (data, response) = try await session.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw ReelMindError.invalidResponse(statusCode: -1)
-        }
+        for currentModel in modelsToTry {
+            let endpointString = "https://generativelanguage.googleapis.com/v1beta/models/\(currentModel):generateContent"
+            guard let url = URL(string: endpointString) else { continue }
 
-        guard (200...299).contains(httpResponse.statusCode) else {
-            if let errorObj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-               let errorInfo = errorObj["error"] as? [String: Any],
-               let message = errorInfo["message"] as? String {
-                throw ReelMindError.serverError(message: "Gemini API: \(message)")
+            var backoffSeconds: UInt64 = 1_500_000_000 // 1.5s
+            let maxAttempts = 2
+
+            for attempt in 1...maxAttempts {
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.timeoutInterval = 60.0
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.setValue(apiKey.trimmingCharacters(in: .whitespacesAndNewlines), forHTTPHeaderField: "x-goog-api-key")
+                request.httpBody = httpBody
+
+                do {
+                    let (data, response) = try await session.data(for: request)
+                    guard let httpResponse = response as? HTTPURLResponse else {
+                        throw ReelMindError.invalidResponse(statusCode: -1)
+                    }
+
+                    if (200...299).contains(httpResponse.statusCode) {
+                        guard let responseObj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                              let candidates = responseObj["candidates"] as? [[String: Any]],
+                              let firstCandidate = candidates.first,
+                              let content = firstCandidate["content"] as? [String: Any],
+                              let parts = content["parts"] as? [[String: Any]],
+                              let firstPart = parts.first,
+                              let text = firstPart["text"] as? String else {
+                            throw ReelMindError.decodingError(message: "Unexpected response format from Gemini.")
+                        }
+                        return text
+                    }
+
+                    // Parse Google API error message
+                    let errorMessage: String
+                    if let errorObj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                       let errorInfo = errorObj["error"] as? [String: Any],
+                       let msg = errorInfo["message"] as? String {
+                        errorMessage = msg
+                    } else {
+                        errorMessage = "HTTP \(httpResponse.statusCode)"
+                    }
+
+                    // Check if error is temporary (503 High Demand, 429 Rate Limit, 404 Model Not Found)
+                    let isTemporary = httpResponse.statusCode == 503 ||
+                                      httpResponse.statusCode == 429 ||
+                                      httpResponse.statusCode == 404 ||
+                                      errorMessage.lowercased().contains("high demand") ||
+                                      errorMessage.lowercased().contains("quota")
+
+                    if isTemporary {
+                        lastError = ReelMindError.serverError(message: "Gemini API (\(currentModel)): \(errorMessage)")
+                        if attempt < maxAttempts {
+                            try? await Task.sleep(nanoseconds: backoffSeconds)
+                            backoffSeconds *= 2
+                            continue
+                        }
+                        // Break attempt loop to failover to next fallback model
+                        break
+                    } else {
+                        throw ReelMindError.serverError(message: "Gemini API: \(errorMessage)")
+                    }
+                } catch {
+                    lastError = error
+                    if let reelErr = error as? ReelMindError,
+                       case .serverError(let msg) = reelErr,
+                       !msg.lowercased().contains("high demand") && !msg.contains("503") && !msg.contains("429") {
+                        throw error
+                    }
+                    if attempt < maxAttempts {
+                        try? await Task.sleep(nanoseconds: backoffSeconds)
+                        backoffSeconds *= 2
+                    }
+                }
             }
-            throw ReelMindError.invalidResponse(statusCode: httpResponse.statusCode)
         }
 
-        guard let responseObj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let candidates = responseObj["candidates"] as? [[String: Any]],
-              let firstCandidate = candidates.first,
-              let content = firstCandidate["content"] as? [String: Any],
-              let parts = content["parts"] as? [[String: Any]],
-              let firstPart = parts.first,
-              let text = firstPart["text"] as? String else {
-            throw ReelMindError.decodingError(message: "Unexpected response format from Gemini.")
+        if let finalErr = lastError {
+            throw finalErr
         }
-
-        return text
+        let fallbackMsg = isCurrentLanguageSpanish
+            ? "Los motores de Gemini están experimentando alta demanda. Por favor intenta de nuevo en unos momentos."
+            : "Gemini AI engines are currently experiencing high demand. Please try again shortly."
+        throw ReelMindError.serverError(message: fallbackMsg)
     }
 }
 
