@@ -9,9 +9,9 @@ public final class VaultRepository: Sendable {
         UserDefaults.standard.bool(forKey: "reelmind_use_server_mode")
     }
 
-    public func fetchReels(folderId: String? = nil) async throws -> [Reel] {
+    public func fetchReels(folderId: String? = nil, orgId: String? = nil) async throws -> [Reel] {
         if isServerModeEnabled {
-            return try await APIClient.shared.fetchReels(folderId: folderId)
+            return try await APIClient.shared.fetchReels(folderId: folderId, orgId: orgId)
         } else {
             let all = await LocalVaultService.shared.loadReels()
             if let folderId = folderId, !folderId.isEmpty {
@@ -21,23 +21,37 @@ public final class VaultRepository: Sendable {
         }
     }
 
-    public func fetchFolders() async throws -> [Folder] {
+    public func fetchFolders(orgId: String? = nil) async throws -> [Folder] {
         if isServerModeEnabled {
-            return try await APIClient.shared.fetchFolders()
+            return try await APIClient.shared.fetchFolders(orgId: orgId)
         } else {
             return await LocalVaultService.shared.loadFolders()
         }
     }
 
-    public func analyzeReel(url: String, folderId: String? = nil) async throws -> Reel {
+    public func analyzeReel(url: String, folderId: String? = nil, orgId: String? = nil) async throws -> Reel {
         if isServerModeEnabled {
-            return try await APIClient.shared.analyzeReel(url: url, folderId: folderId)
+            return try await APIClient.shared.analyzeReel(url: url, folderId: folderId, orgId: orgId)
         } else {
             var reel = try await GeminiService.shared.analyzeContent(urlOrText: url)
             reel.folderId = folderId
             await LocalVaultService.shared.addOrUpdateReel(reel)
             return reel
         }
+    }
+
+    public func fetchOrganizations() async throws -> [Organization] {
+        if isServerModeEnabled {
+            return try await APIClient.shared.fetchOrganizations()
+        }
+        return []
+    }
+
+    public func createOrganization(name: String, description: String = "") async throws -> Organization {
+        if isServerModeEnabled {
+            return try await APIClient.shared.createOrganization(name: name, description: description)
+        }
+        throw ReelMindError.serverNotConfigured
     }
 
     public func updateReel(id: String, update: ReelUpdateRequest) async throws -> Reel {

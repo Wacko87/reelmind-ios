@@ -21,6 +21,7 @@ public struct Reel: Codable, Identifiable, Sendable, Hashable {
     public var userNotes: String
     public var folderId: String?
     public var folderName: String?
+    public var orgId: String?
     public var mediaType: String
     public var images: [String]
     public let isDuplicate: Bool?
@@ -48,6 +49,7 @@ public struct Reel: Codable, Identifiable, Sendable, Hashable {
         case userNotes = "user_notes"
         case folderId = "folder_id"
         case folderName = "folder_name"
+        case orgId = "org_id"
         case mediaType = "media_type"
         case images
         case isDuplicate = "is_duplicate"
@@ -76,6 +78,7 @@ public struct Reel: Codable, Identifiable, Sendable, Hashable {
         userNotes: String = "",
         folderId: String? = nil,
         folderName: String? = nil,
+        orgId: String? = nil,
         mediaType: String = "reel",
         images: [String] = [],
         isDuplicate: Bool? = false,
@@ -102,6 +105,7 @@ public struct Reel: Codable, Identifiable, Sendable, Hashable {
         self.userNotes = userNotes
         self.folderId = folderId
         self.folderName = folderName
+        self.orgId = orgId
         self.mediaType = mediaType
         self.images = images
         self.isDuplicate = isDuplicate
@@ -114,17 +118,20 @@ public struct ReelAnalyzeRequest: Codable, Sendable {
     public let url: String
     public let folderId: String?
     public let mediaType: String?
+    public let orgId: String?
 
     enum CodingKeys: String, CodingKey {
         case url
         case folderId = "folder_id"
         case mediaType = "media_type"
+        case orgId = "org_id"
     }
 
-    public init(url: String, folderId: String? = nil, mediaType: String? = "auto") {
+    public init(url: String, folderId: String? = nil, mediaType: String? = "auto", orgId: String? = nil) {
         self.url = url
         self.folderId = folderId
         self.mediaType = mediaType
+        self.orgId = orgId
     }
 }
 

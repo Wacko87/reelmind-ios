@@ -4,6 +4,8 @@ import TipKit
 public struct DashboardView: View {
     @State public var viewModel = ReelListViewModel()
     @State private var showingIngestionSheet = false
+    @State private var showNewOrgAlert = false
+    @State private var newOrgName = ""
     private let shareTip = ShareExtensionTip()
 
     public init() {}
@@ -149,6 +151,65 @@ public struct DashboardView: View {
             }
             .searchable(text: $viewModel.searchQuery, prompt: "Search reels, tools, prompts...")
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Menu {
+                        Section("Espacio de Trabajo") {
+                            Button {
+                                Task {
+                                    await viewModel.switchOrganization(to: nil)
+                                }
+                            } label: {
+                                HStack {
+                                    Text("👤 Bóveda Personal")
+                                    if viewModel.selectedOrganization == nil {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+                        }
+
+                        if !viewModel.organizations.isEmpty {
+                            Section("Organizaciones") {
+                                ForEach(viewModel.organizations) { org in
+                                    Button {
+                                        Task {
+                                            await viewModel.switchOrganization(to: org)
+                                        }
+                                    } label: {
+                                        HStack {
+                                            Text("🏢 \(org.name)")
+                                            if viewModel.selectedOrganization?.id == org.id {
+                                                Image(systemName: "checkmark")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        Section {
+                            Button {
+                                newOrgName = ""
+                                showNewOrgAlert = true
+                            } label: {
+                                Label("Nueva Organización...", systemImage: "plus.rectangle.on.folder")
+                            }
+                        }
+                    } label: {
+                        HStack(spacing: 5) {
+                            Image(systemName: viewModel.selectedOrganization == nil ? "person.crop.circle" : "building.2.crop.circle")
+                            Text(viewModel.selectedOrganization?.name ?? "Personal")
+                                .font(.subheadline.weight(.semibold))
+                            Image(systemName: "chevron.up.chevron.down")
+                                .font(.caption2)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Color(.secondarySystemFill))
+                        .clipShape(Capsule())
+                    }
+                }
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showingIngestionSheet = true
@@ -160,8 +221,20 @@ public struct DashboardView: View {
                     .accessibilityLabel("Add new reel to vault")
                 }
             }
+            .alert("Nueva Organización", isPresented: $showNewOrgAlert) {
+                TextField("Nombre del equipo (ej: Equipo IA)", text: $newOrgName)
+                Button("Crear") {
+                    let name = newOrgName
+                    Task {
+                        await viewModel.createOrganization(name: name)
+                    }
+                }
+                Button("Cancelar", role: .cancel) {}
+            } message: {
+                Text("Crea una organización para compartir una bóveda de trucos y herramientas con otros miembros.")
+            }
             .sheet(isPresented: $showingIngestionSheet) {
-                IngestionSheetView {
+                IngestionSheetView(orgId: viewModel.selectedOrganization?.id) {
                     Task {
                         await viewModel.loadData()
                     }

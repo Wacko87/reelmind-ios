@@ -6,6 +6,7 @@ import Observation
 public final class IngestionViewModel {
     public var urlInput: String = ""
     public var selectedFolderId: String? = nil
+    public var orgId: String? = nil
     public var isAnalyzing: Bool = false
     public var analyzedReel: Reel? = nil
     public var errorMessage: String? = nil
@@ -34,7 +35,7 @@ public final class IngestionViewModel {
         analyzedReel = nil
 
         do {
-            let result = try await repository.analyzeReel(url: trimmed, folderId: selectedFolderId)
+            let result = try await repository.analyzeReel(url: trimmed, folderId: selectedFolderId, orgId: orgId)
             self.analyzedReel = result
             self.isAnalyzing = false
             return true

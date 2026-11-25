@@ -49,13 +49,16 @@ public final class APIClient: Sendable {
 
     // MARK: - Reels Endpoints
 
-    public func fetchReels(folderId: String? = nil, status: String? = nil) async throws -> [Reel] {
+    public func fetchReels(folderId: String? = nil, status: String? = nil, orgId: String? = nil) async throws -> [Reel] {
         var queryItems: [URLQueryItem] = []
         if let folderId = folderId, !folderId.isEmpty {
             queryItems.append(URLQueryItem(name: "folder_id", value: folderId))
         }
         if let status = status, !status.isEmpty {
             queryItems.append(URLQueryItem(name: "status", value: status))
+        }
+        if let orgId = orgId, !orgId.isEmpty {
+            queryItems.append(URLQueryItem(name: "org_id", value: orgId))
         }
 
         let url = try makeURL(path: "/api/reels", queryItems: queryItems)
@@ -84,13 +87,13 @@ public final class APIClient: Sendable {
         }
     }
 
-    public func analyzeReel(url rawUrl: String, folderId: String? = nil) async throws -> Reel {
+    public func analyzeReel(url rawUrl: String, folderId: String? = nil, orgId: String? = nil) async throws -> Reel {
         let endpoint = try makeURL(path: "/api/reels/analyze")
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
         applyHeaders(to: &request)
 
-        let body = ReelAnalyzeRequest(url: rawUrl, folderId: folderId)
+        let body = ReelAnalyzeRequest(url: rawUrl, folderId: folderId, orgId: orgId)
         request.httpBody = try JSONEncoder().encode(body)
 
         let (data, response) = try await session.data(for: request)
@@ -147,8 +150,16 @@ public final class APIClient: Sendable {
 
     // MARK: - Folders Endpoints
 
-    public func fetchFolders() async throws -> [Folder] {
-        let url = try makeURL(path: "/api/folders")
+    public func fetchFolders(mediaType: String? = nil, orgId: String? = nil) async throws -> [Folder] {
+        var queryItems: [URLQueryItem] = []
+        if let mediaType = mediaType, !mediaType.isEmpty {
+            queryItems.append(URLQueryItem(name: "media_type", value: mediaType))
+        }
+        if let orgId = orgId, !orgId.isEmpty {
+            queryItems.append(URLQueryItem(name: "org_id", value: orgId))
+        }
+
+        let url = try makeURL(path: "/api/folders", queryItems: queryItems)
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         applyHeaders(to: &request)
@@ -176,6 +187,91 @@ public final class APIClient: Sendable {
         return try JSONDecoder().decode(Folder.self, from: data)
     }
 
+    // MARK: - Organizations Endpoints (GitHub-style shared workspaces)
+
+    public func fetchOrganizations() async throws -> [Organization] {
+        let url = try makeURL(path: "/api/orgs")
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        applyHeaders(to: &request)
+
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
+        }
+
+        return try JSONDecoder().decode([Organization].self, from: data)
+    }
+
+    public func createOrganization(name: String, description: String = "") async throws -> Organization {
+        let url = try makeURL(path: "/api/orgs")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        applyHeaders(to: &request)
+
+        let payload: [String: Any] = [
+            "name": name.trimmingCharacters(in: .whitespacesAndNewlines),
+            "description": description.trimmingCharacters(in: .whitespacesAndNewlines)
+        ]
+        request.httpBody = try JSONSerialization.data(withJSONObject: payload)
+
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
+        }
+
+        return try JSONDecoder().decode(Organization.self, from: data)
+    }
+
+    public func fetchOrganizationDetail(orgId: String) async throws -> OrganizationDetail {
+        let url = try makeURL(path: "/api/orgs/\(orgId)")
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        applyHeaders(to: &request)
+
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
+        }
+
+        return try JSONDecoder().decode(OrganizationDetail.self, from: data)
+    }
+
+    public func addOrganizationMember(orgId: String, username: String, role: String = "member") async throws -> OrganizationMember {
+        let url = try makeURL(path: "/api/orgs/\(orgId)/members")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        applyHeaders(to: &request)
+
+        let payload = ["username": username.trimmingCharacters(in: .whitespacesAndNewlines), "role": role]
+        request.httpBody = try JSONSerialization.data(withJSONObject: payload)
+
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            if let errorObj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let detail = errorObj["detail"] as? String {
+                throw ReelMindError.serverError(message: detail)
+            }
+            throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
+        }
+
+        return try JSONDecoder().decode(OrganizationMember.self, from: data)
+    }
+
+    public func removeOrganizationMember(orgId: String, userId: String) async throws -> Bool {
+        let url = try makeURL(path: "/api/orgs/\(orgId)/members/\(userId)")
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        applyHeaders(to: &request)
+
+        let (_, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
+        }
+
+        return true
+    }
+
     // MARK: - Prompt Studio & Ask Vault
 
     public func optimizePrompt(request optReq: PromptOptimizeRequest) async throws -> PromptOptimizeResponse {
@@ -193,8 +289,13 @@ public final class APIClient: Sendable {
         return try JSONDecoder().decode(PromptOptimizeResponse.self, from: data)
     }
 
-    public func askVault(question: String) async throws -> VaultAskResponse {
-        let url = try makeURL(path: "/api/vault/ask")
+    public func askVault(question: String, orgId: String? = nil) async throws -> VaultAskResponse {
+        var queryItems: [URLQueryItem] = []
+        if let orgId = orgId, !orgId.isEmpty {
+            queryItems.append(URLQueryItem(name: "org_id", value: orgId))
+        }
+
+        let url = try makeURL(path: "/api/vault/ask", queryItems: queryItems)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         applyHeaders(to: &request)
@@ -210,13 +311,55 @@ public final class APIClient: Sendable {
 
     // MARK: - Authentication & Status
 
-    public func loginWithPIN(pin: String) async throws -> Bool {
+    public func registerUser(username: String, pin: String) async throws -> Bool {
+        let url = try makeURL(path: "/api/auth/register")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let payload: [String: Any] = [
+            "username": username.trimmingCharacters(in: .whitespacesAndNewlines),
+            "pin": pin.trimmingCharacters(in: .whitespacesAndNewlines)
+        ]
+        request.httpBody = try JSONSerialization.data(withJSONObject: payload)
+
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw ReelMindError.invalidResponse(statusCode: -1)
+        }
+
+        guard (200...299).contains(httpResponse.statusCode) else {
+            if let errorObj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let detail = errorObj["detail"] as? String {
+                throw ReelMindError.serverError(message: detail)
+            }
+            throw ReelMindError.invalidResponse(statusCode: httpResponse.statusCode)
+        }
+
+        struct LoginRes: Codable {
+            let success: Bool
+            let token: String?
+            let message: String?
+        }
+
+        let decoded = try JSONDecoder().decode(LoginRes.self, from: data)
+        if let token = decoded.token, !token.isEmpty {
+            KeychainService.shared.save(key: "reelmind_api_token", value: token)
+            return true
+        }
+        return decoded.success
+    }
+
+    public func loginWithPIN(pin: String, username: String? = nil) async throws -> Bool {
         let url = try makeURL(path: "/api/auth/login")
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let payload = ["pin": pin.trimmingCharacters(in: .whitespacesAndNewlines)]
+        var payload: [String: Any] = ["pin": pin.trimmingCharacters(in: .whitespacesAndNewlines)]
+        if let username = username?.trimmingCharacters(in: .whitespacesAndNewlines), !username.isEmpty {
+            payload["username"] = username
+        }
         request.httpBody = try JSONSerialization.data(withJSONObject: payload)
 
         let (data, response) = try await session.data(for: request)

@@ -10,11 +10,14 @@ public final class ReelListViewModel {
         }
     }
     public var folders: [Folder] = []
+    public var organizations: [Organization] = []
+    public var selectedOrganization: Organization? = nil
     public var selectedFolderId: String? = nil
     public var selectedTool: String? = nil
     public var searchQuery: String = ""
     public var isLoading: Bool = false
     public var errorMessage: String? = nil
+    public var isShowingNewOrgSheet: Bool = false
     public private(set) var availableTools: [String] = []
 
     private let repository: VaultRepository
@@ -59,14 +62,36 @@ public final class ReelListViewModel {
         isLoading = true
         errorMessage = nil
         do {
-            async let fetchedReels = repository.fetchReels(folderId: selectedFolderId)
-            async let fetchedFolders = repository.fetchFolders()
+            let orgId = selectedOrganization?.id
+            async let fetchedReels = repository.fetchReels(folderId: selectedFolderId, orgId: orgId)
+            async let fetchedFolders = repository.fetchFolders(orgId: orgId)
+            async let fetchedOrgs = repository.fetchOrganizations()
+            
             self.reels = try await fetchedReels
             self.folders = try await fetchedFolders
+            self.organizations = (try? await fetchedOrgs) ?? []
         } catch {
             self.errorMessage = error.localizedDescription
         }
         isLoading = false
+    }
+
+    public func switchOrganization(to org: Organization?) async {
+        selectedOrganization = org
+        selectedFolderId = nil
+        selectedTool = nil
+        await loadData()
+    }
+
+    public func createOrganization(name: String, description: String = "") async {
+        guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        do {
+            let newOrg = try await repository.createOrganization(name: name, description: description)
+            organizations.append(newOrg)
+            await switchOrganization(to: newOrg)
+        } catch {
+            self.errorMessage = "Error creando organización: \(error.localizedDescription)"
+        }
     }
 
     public func deleteReel(id: String) async {

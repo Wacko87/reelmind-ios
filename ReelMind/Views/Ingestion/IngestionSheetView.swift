@@ -3,9 +3,11 @@ import SwiftUI
 public struct IngestionSheetView: View {
     @Environment(\.dismiss) private var dismiss
     @State public var viewModel = IngestionViewModel()
+    public let orgId: String?
     public let onCompleted: () -> Void
 
-    public init(onCompleted: @escaping () -> Void) {
+    public init(orgId: String? = nil, onCompleted: @escaping () -> Void) {
+        self.orgId = orgId
         self.onCompleted = onCompleted
     }
 
@@ -120,6 +122,9 @@ public struct IngestionSheetView: View {
                         dismiss()
                     }
                 }
+            }
+            .onAppear {
+                viewModel.orgId = orgId
             }
         }
     }

@@ -21,6 +21,12 @@ public final class SettingsViewModel {
     public var serverConnectionSuccess: Bool? = nil
     public var serverStatusMessage: String? = nil
 
+    // User Self-Registration
+    public var authMode: Int = 0 // 0 = Iniciar Sesión con PIN, 1 = Crear Cuenta
+    public var registerUsername: String = ""
+    public var registerPIN: String = ""
+    public var isRegistering: Bool = false
+
     // Vault Management
     public var exportedMarkdown: String = ""
     public var showExportSheet: Bool = false
@@ -102,6 +108,52 @@ public final class SettingsViewModel {
         } catch {
             serverConnectionSuccess = false
             serverStatusMessage = "Error del servidor: \(error.localizedDescription)"
+        }
+    }
+
+    public func registerAccount() async {
+        isRegistering = true
+        serverConnectionSuccess = nil
+        serverStatusMessage = nil
+        defer { isRegistering = false }
+
+        let cleanUser = registerUsername.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let cleanPin = registerPIN.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !cleanUser.isEmpty else {
+            serverConnectionSuccess = false
+            serverStatusMessage = Locale.current.language.languageCode?.identifier == "es"
+                ? "Por favor, introduce un nombre de usuario."
+                : "Please enter a username."
+            return
+        }
+
+        guard cleanPin.count >= 4 else {
+            serverConnectionSuccess = false
+            serverStatusMessage = Locale.current.language.languageCode?.identifier == "es"
+                ? "El PIN debe tener al menos 4 caracteres."
+                : "The PIN must be at least 4 characters."
+            return
+        }
+
+        saveSettings()
+
+        do {
+            let success = try await APIClient.shared.registerUser(username: cleanUser, pin: cleanPin)
+            if success {
+                self.apiToken = cleanPin
+                saveSettings()
+                serverConnectionSuccess = true
+                serverStatusMessage = Locale.current.language.languageCode?.identifier == "es"
+                    ? "¡Cuenta @\(cleanUser) registrada y conectada con éxito!"
+                    : "Account @\(cleanUser) registered and connected successfully!"
+                authMode = 0
+                registerUsername = ""
+                registerPIN = ""
+            }
+        } catch {
+            serverConnectionSuccess = false
+            serverStatusMessage = "Error: \(error.localizedDescription)"
         }
     }
 

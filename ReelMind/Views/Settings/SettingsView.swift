@@ -97,30 +97,70 @@ public struct SettingsView: View {
                                 }
                         }
 
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Access PIN / Token")
-                                .font(.caption.bold())
-                                .foregroundStyle(.secondary)
-                            SecureField("PIN (ej. 3004)", text: $viewModel.apiToken)
-                                .onChange(of: viewModel.apiToken) { _, _ in
-                                    viewModel.saveSettings()
-                                }
+                        Picker("Acceso al Servidor", selection: $viewModel.authMode) {
+                            Text("Iniciar Sesión").tag(0)
+                            Text("Crear Cuenta").tag(1)
                         }
+                        .pickerStyle(.segmented)
+                        .padding(.vertical, 4)
 
-                        Button {
-                            Task {
-                                await viewModel.testServerConnection()
+                        if viewModel.authMode == 0 {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Access PIN / Token")
+                                    .font(.caption.bold())
+                                    .foregroundStyle(.secondary)
+                                SecureField("PIN personal (ej. 3004)", text: $viewModel.apiToken)
+                                    .onChange(of: viewModel.apiToken) { _, _ in
+                                        viewModel.saveSettings()
+                                    }
                             }
-                        } label: {
-                            HStack {
-                                if viewModel.isTestingServer {
-                                    ProgressView()
-                                        .padding(.trailing, 4)
+
+                            Button {
+                                Task {
+                                    await viewModel.testServerConnection()
                                 }
-                                Text("Verify Server Connection")
+                            } label: {
+                                HStack {
+                                    if viewModel.isTestingServer {
+                                        ProgressView()
+                                            .padding(.trailing, 4)
+                                    }
+                                    Text("Verify Server Connection")
+                                }
                             }
+                            .disabled(viewModel.isTestingServer)
+                        } else {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Nombre de Usuario")
+                                    .font(.caption.bold())
+                                    .foregroundStyle(.secondary)
+                                TextField("ej. carlos", text: $viewModel.registerUsername)
+                                    .autocorrectionDisabled()
+                                    .textInputAutocapitalization(.never)
+                            }
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("PIN de Acceso")
+                                    .font(.caption.bold())
+                                    .foregroundStyle(.secondary)
+                                SecureField("Mínimo 4 caracteres", text: $viewModel.registerPIN)
+                            }
+
+                            Button {
+                                Task {
+                                    await viewModel.registerAccount()
+                                }
+                            } label: {
+                                HStack {
+                                    if viewModel.isRegistering {
+                                        ProgressView()
+                                            .padding(.trailing, 4)
+                                    }
+                                    Text("Crear Cuenta e Iniciar Sesión")
+                                }
+                            }
+                            .disabled(viewModel.isRegistering)
                         }
-                        .disabled(viewModel.isTestingServer)
 
                         if let msg = viewModel.serverStatusMessage {
                             HStack(spacing: 6) {
