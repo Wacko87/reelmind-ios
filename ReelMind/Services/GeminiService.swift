@@ -195,11 +195,29 @@ public final class GeminiService: Sendable {
             throw ReelMindError.serverError(message: errorMsg)
         }
 
-        _ = try await callGemini(
-            systemInstruction: "You are a health check system. Reply with 'OK'.",
-            prompt: "ping",
-            enforceJSON: false
-        )
+        // Validate key using lightweight Google API models endpoint (instant ~50ms response, 0 quota, no LLM queue delay)
+        guard let url = URL(string: "https://generativelanguage.googleapis.com/v1beta/models?pageSize=1") else {
+            throw ReelMindError.invalidURL
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.timeoutInterval = 20.0
+        request.setValue(apiKey.trimmingCharacters(in: .whitespacesAndNewlines), forHTTPHeaderField: "x-goog-api-key")
+
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw ReelMindError.invalidResponse(statusCode: -1)
+        }
+
+        guard (200...299).contains(httpResponse.statusCode) else {
+            if let errorObj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let errorInfo = errorObj["error"] as? [String: Any],
+               let message = errorInfo["message"] as? String {
+                throw ReelMindError.serverError(message: "Gemini API: \(message)")
+            }
+            throw ReelMindError.invalidResponse(statusCode: httpResponse.statusCode)
+        }
     }
 
     // MARK: - Internal HTTP Client
@@ -221,7 +239,7 @@ public final class GeminiService: Sendable {
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.timeoutInterval = 15.0
+        request.timeoutInterval = 60.0
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(apiKey.trimmingCharacters(in: .whitespacesAndNewlines), forHTTPHeaderField: "x-goog-api-key")
 
