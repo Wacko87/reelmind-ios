@@ -88,7 +88,7 @@ public struct SettingsView: View {
                             Text("Server URL")
                                 .font(.caption.bold())
                                 .foregroundStyle(.secondary)
-                            TextField("https://reels.wacko87.es", text: $viewModel.serverURL)
+                            TextField("https://tu-servidor-reelmind.com", text: $viewModel.serverURL)
                                 .keyboardType(.URL)
                                 .autocorrectionDisabled()
                                 .textInputAutocapitalization(.never)
@@ -174,7 +174,7 @@ public struct SettingsView: View {
                 } header: {
                     Text("Advanced Setup")
                 } footer: {
-                    Text("Server mode connects to your Unraid instance (reels.wacko87.es), downloading the actual video with yt-dlp to extract text on screen (OCR), prompts, and audio with 100% fidelity.")
+                    Text("Server mode connects to your self-hosted instance, downloading the actual video with yt-dlp to extract text on screen (OCR), prompts, and audio with 100% fidelity.")
                 }
 
                 // Section 3: Security & Privacy

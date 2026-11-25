@@ -195,15 +195,20 @@ public final class GeminiService: Sendable {
             throw ReelMindError.serverError(message: errorMsg)
         }
 
-        // Validate key using lightweight Google API models endpoint (instant ~50ms response, 0 quota, no LLM queue delay)
-        guard let url = URL(string: "https://generativelanguage.googleapis.com/v1beta/models?pageSize=1") else {
+        // Validate key and generation with lightweight gemini-3.5-flash-lite (fast, high-availability)
+        guard let url = URL(string: "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent") else {
             throw ReelMindError.invalidURL
         }
 
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.timeoutInterval = 20.0
+        request.httpMethod = "POST"
+        request.timeoutInterval = 15.0
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(apiKey.trimmingCharacters(in: .whitespacesAndNewlines), forHTTPHeaderField: "x-goog-api-key")
+        let payload: [String: Any] = [
+            "contents": [["parts": [["text": "ping"]]]]
+        ]
+        request.httpBody = try JSONSerialization.data(withJSONObject: payload)
 
         let (data, response) = try await session.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
@@ -224,6 +229,7 @@ public final class GeminiService: Sendable {
 
     private let fallbackModels = [
         "gemini-3.5-flash-lite",
+        "gemini-3.5-flash",
         "gemini-3.8-flash",
         "gemini-3.1-flash-lite"
     ]
@@ -272,13 +278,13 @@ public final class GeminiService: Sendable {
             let endpointString = "https://generativelanguage.googleapis.com/v1beta/models/\(currentModel):generateContent"
             guard let url = URL(string: endpointString) else { continue }
 
-            var backoffSeconds: UInt64 = 1_500_000_000 // 1.5s
+            var backoffSeconds: UInt64 = 1_000_000_000 // 1s
             let maxAttempts = 2
 
             for attempt in 1...maxAttempts {
                 var request = URLRequest(url: url)
                 request.httpMethod = "POST"
-                request.timeoutInterval = 60.0
+                request.timeoutInterval = 25.0
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 request.setValue(apiKey.trimmingCharacters(in: .whitespacesAndNewlines), forHTTPHeaderField: "x-goog-api-key")
                 request.httpBody = httpBody
@@ -312,12 +318,13 @@ public final class GeminiService: Sendable {
                         errorMessage = "HTTP \(httpResponse.statusCode)"
                     }
 
-                    // Check if error is temporary (503 High Demand, 429 Rate Limit, 404 Model Not Found)
+                    // Check if error is temporary (503 High Demand, 429 Rate Limit, 404 Model Not Found, overload)
                     let isTemporary = httpResponse.statusCode == 503 ||
                                       httpResponse.statusCode == 429 ||
                                       httpResponse.statusCode == 404 ||
                                       errorMessage.lowercased().contains("high demand") ||
-                                      errorMessage.lowercased().contains("quota")
+                                      errorMessage.lowercased().contains("quota") ||
+                                      errorMessage.lowercased().contains("temporar")
 
                     if isTemporary {
                         lastError = ReelMindError.serverError(message: "Gemini API (\(currentModel)): \(errorMessage)")
@@ -326,13 +333,17 @@ public final class GeminiService: Sendable {
                             backoffSeconds *= 2
                             continue
                         }
-                        // Break attempt loop to failover to next fallback model
+                        // Break attempt loop to failover to next fallback model immediately
                         break
                     } else {
                         throw ReelMindError.serverError(message: "Gemini API: \(errorMessage)")
                     }
                 } catch {
                     lastError = error
+                    // If timeout, break attempt loop to failover immediately to next fallback model
+                    if let urlErr = error as? URLError, urlErr.code == .timedOut {
+                        break
+                    }
                     if let reelErr = error as? ReelMindError,
                        case .serverError(let msg) = reelErr,
                        !msg.lowercased().contains("high demand") && !msg.contains("503") && !msg.contains("429") {

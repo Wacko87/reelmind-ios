@@ -10,8 +10,8 @@ public final class SettingsViewModel {
 
     // Optional Homelab / Server Mode
     public var useServerMode: Bool = true
-    public var serverURL: String = "https://reels.wacko87.es"
-    public var apiToken: String = "3004"
+    public var serverURL: String = ""
+    public var apiToken: String = ""
 
     public var isTesting: Bool = false
     public var connectionSuccess: Bool? = nil
@@ -56,10 +56,10 @@ public final class SettingsViewModel {
         }
 
         let savedURL = UserDefaults.standard.string(forKey: "reelmind_server_url") ?? ""
-        self.serverURL = savedURL.isEmpty ? "https://reels.wacko87.es" : savedURL
+        self.serverURL = savedURL
 
         let savedToken = KeychainService.shared.get(key: "reelmind_api_token") ?? ""
-        self.apiToken = savedToken.isEmpty ? "3004" : savedToken
+        self.apiToken = savedToken
     }
 
     public func saveSettings() {
@@ -102,7 +102,7 @@ public final class SettingsViewModel {
             } else {
                 serverConnectionSuccess = true
                 serverStatusMessage = Locale.current.language.languageCode?.identifier == "es"
-                    ? "¡Conectado al servidor ReelMind (reels.wacko87.es) con éxito!"
+                    ? "¡Conectado al servidor ReelMind con éxito!"
                     : "Connected to ReelMind server successfully!"
             }
         } catch {

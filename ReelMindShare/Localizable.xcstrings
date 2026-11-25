@@ -1145,19 +1145,19 @@
         }
       }
     },
-    "Server mode connects to your Unraid instance (reels.wacko87.es), downloading the actual video with yt-dlp to extract text on screen (OCR), prompts, and audio with 100% fidelity.": {
+    "Server mode connects to your self-hosted instance, downloading the actual video with yt-dlp to extract text on screen (OCR), prompts, and audio with 100% fidelity.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server mode connects to your Unraid instance (reels.wacko87.es), downloading the actual video with yt-dlp to extract text on screen (OCR), prompts, and audio with 100% fidelity."
+            "value": "Server mode connects to your self-hosted instance, downloading the actual video with yt-dlp to extract text on screen (OCR), prompts, and audio with 100% fidelity."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "El modo servidor conecta con tu instancia de Unraid (reels.wacko87.es), descargando el vídeo real con yt-dlp para extraer texto en pantalla (OCR), prompts y audio con 100% de fidelidad."
+            "value": "El modo servidor conecta con tu instancia privada, descargando el vídeo real con yt-dlp para extraer texto en pantalla (OCR), prompts y audio con 100% de fidelidad."
           }
         }
       }
