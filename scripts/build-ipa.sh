@@ -27,7 +27,7 @@ zip -r -q "ReelMind.ipa" Payload/
 rm -rf Payload/
 
 echo "==> 3. Distributing ReelMind.ipa to iCloud Drive & Desktop..."
-VERSION_IPA="ReelMind_v1.6_MultiUser.ipa"
+VERSION_IPA="ReelMind_v1.7_Refined.ipa"
 cp "${OUTPUT_DIR}/ReelMind.ipa" "/Users/wacko87/Desktop/${VERSION_IPA}"
 echo "  -> Copied directly to Mac Desktop: /Users/wacko87/Desktop/${VERSION_IPA}"
 

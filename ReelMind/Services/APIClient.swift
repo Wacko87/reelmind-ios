@@ -47,6 +47,20 @@ public final class APIClient: Sendable {
         }
     }
 
+    private func executeData(for request: URLRequest) async throws -> (Data, URLResponse) {
+        do {
+            return try await executeData(for: request)
+        } catch let urlError as URLError {
+            if urlError.code == .cannotConnectToHost || urlError.code == .timedOut || urlError.code == .networkConnectionLost || urlError.code == .cannotFindHost {
+                let msg = Locale.current.language.languageCode?.identifier == "es"
+                    ? "No se puede conectar con tu servidor ReelMind. Comprueba que está encendido y que la URL es accesible."
+                    : "Cannot reach your ReelMind server. Please verify your server is running and reachable."
+                throw ReelMindError.serverError(message: msg)
+            }
+            throw urlError
+        }
+    }
+
     // MARK: - Reels Endpoints
 
     public func fetchReels(folderId: String? = nil, status: String? = nil, orgId: String? = nil) async throws -> [Reel] {
@@ -66,7 +80,7 @@ public final class APIClient: Sendable {
         request.httpMethod = "GET"
         applyHeaders(to: &request)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ReelMindError.invalidResponse(statusCode: -1)
         }
@@ -96,7 +110,7 @@ public final class APIClient: Sendable {
         let body = ReelAnalyzeRequest(url: rawUrl, folderId: folderId, orgId: orgId)
         request.httpBody = try JSONEncoder().encode(body)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ReelMindError.invalidResponse(statusCode: -1)
         }
@@ -128,7 +142,7 @@ public final class APIClient: Sendable {
         applyHeaders(to: &request)
         request.httpBody = try JSONEncoder().encode(update)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }
@@ -142,7 +156,7 @@ public final class APIClient: Sendable {
         request.httpMethod = "DELETE"
         applyHeaders(to: &request)
 
-        let (_, response) = try await session.data(for: request)
+        let (_, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }
@@ -164,7 +178,7 @@ public final class APIClient: Sendable {
         request.httpMethod = "GET"
         applyHeaders(to: &request)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }
@@ -179,7 +193,7 @@ public final class APIClient: Sendable {
         applyHeaders(to: &request)
         request.httpBody = try JSONEncoder().encode(folderReq)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }
@@ -195,7 +209,7 @@ public final class APIClient: Sendable {
         request.httpMethod = "GET"
         applyHeaders(to: &request)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }
@@ -215,7 +229,7 @@ public final class APIClient: Sendable {
         ]
         request.httpBody = try JSONSerialization.data(withJSONObject: payload)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }
@@ -229,7 +243,7 @@ public final class APIClient: Sendable {
         request.httpMethod = "GET"
         applyHeaders(to: &request)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }
@@ -246,7 +260,7 @@ public final class APIClient: Sendable {
         let payload = ["username": username.trimmingCharacters(in: .whitespacesAndNewlines), "role": role]
         request.httpBody = try JSONSerialization.data(withJSONObject: payload)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             if let errorObj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                let detail = errorObj["detail"] as? String {
@@ -264,7 +278,7 @@ public final class APIClient: Sendable {
         request.httpMethod = "DELETE"
         applyHeaders(to: &request)
 
-        let (_, response) = try await session.data(for: request)
+        let (_, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }
@@ -281,7 +295,7 @@ public final class APIClient: Sendable {
         applyHeaders(to: &request)
         request.httpBody = try JSONEncoder().encode(optReq)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }
@@ -301,7 +315,7 @@ public final class APIClient: Sendable {
         applyHeaders(to: &request)
         request.httpBody = try JSONEncoder().encode(VaultAskRequest(question: question))
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }
@@ -323,7 +337,7 @@ public final class APIClient: Sendable {
         ]
         request.httpBody = try JSONSerialization.data(withJSONObject: payload)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ReelMindError.invalidResponse(statusCode: -1)
         }
@@ -362,7 +376,7 @@ public final class APIClient: Sendable {
         }
         request.httpBody = try JSONSerialization.data(withJSONObject: payload)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ReelMindError.invalidResponse(statusCode: -1)
         }
@@ -395,7 +409,7 @@ public final class APIClient: Sendable {
         request.httpMethod = "GET"
         applyHeaders(to: &request)
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await executeData(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw ReelMindError.invalidResponse(statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1)
         }

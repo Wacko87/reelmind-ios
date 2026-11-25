@@ -40,6 +40,20 @@ public struct PromptStudioView: View {
                             .pickerStyle(.menu)
                         }
 
+                        if viewModel.promptInput.isEmpty {
+                            Button {
+                                viewModel.loadSamplePrompt()
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "sparkles")
+                                    Text("💡 Cargar prompt de ejemplo")
+                                }
+                                .font(.caption)
+                                .foregroundStyle(Color.accentColor)
+                            }
+                            .padding(.top, 2)
+                        }
+
                         Button {
                             Task {
                                 await viewModel.optimize()
@@ -110,6 +124,21 @@ public struct PromptStudioView: View {
                                 .padding(.horizontal, 16)
                             }
                         }
+                    } else if !viewModel.isOptimizing {
+                        VStack(spacing: 8) {
+                            Image(systemName: "wand.and.stars")
+                                .font(.system(size: 36))
+                                .foregroundStyle(.secondary)
+                            Text("Optimizador Multimodelo de Prompts")
+                                .font(.subheadline.bold())
+                                .foregroundStyle(.secondary)
+                            Text("Escribe un prompt básico y Gemini generará 3 variaciones de alta fidelidad adaptadas al modelo seleccionado.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 32)
+                        }
+                        .padding(.top, 24)
                     }
                 }
                 .padding(.vertical, 16)

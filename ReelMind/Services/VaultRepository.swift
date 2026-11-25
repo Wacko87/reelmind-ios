@@ -92,9 +92,9 @@ public final class VaultRepository: Sendable {
         }
     }
 
-    public func askVault(question: String) async throws -> (answer: String, citations: [VaultCitation]) {
+    public func askVault(question: String, orgId: String? = nil) async throws -> (answer: String, citations: [VaultCitation]) {
         if isServerModeEnabled {
-            let res = try await APIClient.shared.askVault(question: question)
+            let res = try await APIClient.shared.askVault(question: question, orgId: orgId)
             return (res.answer, res.citations)
         } else {
             let reels = await LocalVaultService.shared.loadReels()

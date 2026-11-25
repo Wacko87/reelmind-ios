@@ -8,8 +8,51 @@ public struct SettingsView: View {
     public var body: some View {
         NavigationStack {
             Form {
+                // Section 0: Active Mode Banner
+                Section {
+                    HStack(spacing: 12) {
+                        Image(systemName: viewModel.useServerMode ? "server.rack" : "iphone")
+                            .font(.title2)
+                            .foregroundStyle(viewModel.useServerMode ? Color.green : Color.accentColor)
+
+                        VStack(alignment: .leading, spacing: 3) {
+                            HStack(spacing: 6) {
+                                Text(viewModel.useServerMode ? "Modo Servidor Propio" : "Modo Local Autónomo")
+                                    .font(.subheadline.bold())
+                                    .foregroundStyle(.primary)
+
+                                Text(viewModel.useServerMode ? "Activo" : "Local")
+                                    .font(.caption2.bold())
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(viewModel.useServerMode ? Color.green.opacity(0.15) : Color.accentColor.opacity(0.15))
+                                    .foregroundStyle(viewModel.useServerMode ? Color.green : Color.accentColor)
+                                    .clipShape(Capsule())
+                            }
+
+                            Text(viewModel.useServerMode
+                                 ? "El análisis de vídeo (yt-dlp + fotogramas) y la base de datos multiusuario se gestionan en tu servidor."
+                                 : "El análisis se procesa directamente en tu iPhone usando tu clave personal de Gemini AI Studio.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.vertical, 4)
+                }
+
                 // Section 1: AI Engine Configuration (Zero-Server / App Store Friendly)
                 Section {
+                    if viewModel.useServerMode {
+                        HStack(spacing: 8) {
+                            Image(systemName: "info.circle.fill")
+                                .foregroundStyle(Color.accentColor)
+                            Text("En Modo Servidor, tu instancia de Unraid utiliza la clave configurada en su backend. La clave local es opcional como respaldo.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.vertical, 2)
+                    }
+
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Google Gemini API Key")
                             .font(.caption.bold())
