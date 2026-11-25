@@ -26,17 +26,21 @@ cd "${OUTPUT_DIR}"
 zip -r -q "ReelMind.ipa" Payload/
 rm -rf Payload/
 
-echo "==> 3. Distributing ReelMind.ipa to iCloud Drive..."
+echo "==> 3. Distributing ReelMind.ipa to iCloud Drive & Desktop..."
+VERSION_IPA="ReelMind_v1.6_MultiUser.ipa"
+cp "${OUTPUT_DIR}/ReelMind.ipa" "/Users/wacko87/Desktop/${VERSION_IPA}"
+echo "  -> Copied directly to Mac Desktop: /Users/wacko87/Desktop/${VERSION_IPA}"
+
 if [ -d "${ICLOUD_ROOT}" ]; then
     cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_ROOT}/ReelMind.ipa"
-    cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_ROOT}/ReelMind_v1.5_Hardened.ipa"
-    echo "  -> Copied to iCloud Root: ${ICLOUD_ROOT}/ReelMind.ipa & ReelMind_v1.5_Hardened.ipa"
+    cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_ROOT}/${VERSION_IPA}"
+    echo "  -> Copied to iCloud Root: ${ICLOUD_ROOT}/${VERSION_IPA}"
 fi
 
 if [ -d "${ICLOUD_DOWNLOADS}" ]; then
     cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_DOWNLOADS}/ReelMind.ipa"
-    cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_DOWNLOADS}/ReelMind_v1.5_Hardened.ipa"
-    echo "  -> Copied to iCloud Downloads: ${ICLOUD_DOWNLOADS}/ReelMind.ipa"
+    cp "${OUTPUT_DIR}/ReelMind.ipa" "${ICLOUD_DOWNLOADS}/${VERSION_IPA}"
+    echo "  -> Copied to iCloud Downloads: ${ICLOUD_DOWNLOADS}/${VERSION_IPA}"
 fi
 
 if [ -d "${ICLOUD_OBSIDIAN}" ]; then
