@@ -32,6 +32,24 @@ public enum ReelMindError: LocalizedError, Sendable {
             }
             return isSpanish ? "El servidor devolvió un código inesperado: HTTP \(statusCode)." : "Server returned an unexpected HTTP status: \(statusCode)."
         case .serverError(let message):
+            if message.contains("empty media response") || (message.contains("[Instagram]") && message.contains("cookies")) {
+                return isSpanish
+                    ? "Instagram requiere inicio de sesión para acceder a este reel. El contenido pertenece a una cuenta privada, tiene restricción de edad o Meta ha bloqueado temporalmente el acceso público anónimo."
+                    : "Instagram requires login to view this reel. The content is private, age-restricted, or Meta has restricted anonymous access."
+            }
+            if message.contains("yt-dlp") || message.contains("ERROR:") {
+                var cleaned = message.replacingOccurrences(of: #"ERROR:\s*\[[^\]]+\]\s*[^:]*:\s*"#, with: "", options: .regularExpression)
+                if let idx = cleaned.range(of: "Check if this post is accessible") {
+                    cleaned = String(cleaned[..<idx.lowerBound])
+                }
+                if let idx = cleaned.range(of: "See https://") {
+                    cleaned = String(cleaned[..<idx.lowerBound])
+                }
+                let trimmed = cleaned.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !trimmed.isEmpty {
+                    return trimmed
+                }
+            }
             return message
         case .decodingError(let message):
             return isSpanish
